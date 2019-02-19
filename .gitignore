@@ -39,3 +39,4 @@ phpunit.phar
 /config/mailer.php
 /public_html/index.php
 /public_html/admin-panel/index.php
+/README.md
