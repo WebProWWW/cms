@@ -1,0 +1,383 @@
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+trans(t=160)
+    transAll(t)
+
+
+html
+    height 100%
+
+
+body
+    height 100%
+    background #1E253C
+    font-family -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"
+    font-size 13px
+    font-weight 300
+    color white
+
+
+a
+    trans()
+    resetLn(#07A9D9, #34C3F3)
+    user-select none
+    cursor pointer
+
+
+.wrapper
+    mpd(0, 2.3em 0 1em, flex)
+    flex-direction column
+    min-height 100%
+
+
+.header
+    mpd(0, 0)
+    position fixed
+    top 0px
+    left 0px
+    right 0px
+    background #384162
+    box-shadow 0 0 15px 0 black
+    z-index 10
+    &-ln
+        mpd(0, 0.5rem 0, flex)
+        resetLn(#8F99B5, lighten(#8F99B5, 50%))
+        align-items center
+
+
+.footer
+    mpd(auto 0 0)
+
+
+.dropdown
+    position relative
+    &-content
+        mpd()
+        trans()
+        position absolute
+        top 100%
+        right 0px
+        background #384162
+        box-shadow 0 7px 7px 0 alpha(black, 30%)
+        opacity 0
+        visibility hidden
+    &:hover > .dropdown-content
+        opacity 1
+        visibility visible
+    &-ln
+        mpd(0, 0.5rem 1rem, flex)
+        resetLn(#8F99B5, lighten(#8F99B5, 50%))
+
+
+.nav
+    margin-top 20px
+    margin-right -1px
+    &-ln
+        mpd(0 1px 0 0, 20px 15px, flex)
+        resetLn(#8F99B5, lighten(#8F99B5, 50%))
+        flex-direction column
+        background #384162
+        flex-grow 1
+        height 100%
+        &:hover
+            background lighten(#384162, 6%)
+    &-icon
+        mpd(0 0 3px)
+        text-align center
+        font-size 50px
+    &-text
+        mpd(auto 0)
+        text-align center
+
+
+.wall
+    mpd(20px 0 0, 1px 20px 20px)
+    background #384162
+    border-radius 0
+    overflow hidden
+
+
+.divider
+    mpd(20px 0 0)
+    height 1px
+    background #384162
+
+
+.btn
+    mpd(20px 0 0, 0.8rem 1rem)
+    resetBtn()
+    trans()
+    border-radius 0
+    line-height 1
+    overflow hidden
+    &-default
+        resetLn(#ACB3C6, lighten(#ACB3C6, 50%))
+        background #4F5979
+    &-green, &-submit
+        resetLn(white, white)
+        background #00A8AA
+        &:hover
+            background darken(#00A8AA, 13%)
+
+
+.breadcrumb
+    mpd(20px 0 0, 0, flex)
+    flex-wrap wrap
+    &-ln
+        mpd(0, 0, flex)
+        resetLn(#8F99B5, lighten(#8F99B5, 30%))
+        user-select none
+        cursor pointer
+        &:after
+            mpd(0 0.2em)
+            content '•'
+            color #8F99B5
+        &.active, &:last-child
+            cursor default
+            color lighten(#8F99B5, 30%)
+            &:after
+                display none
+
+
+.tab
+    mpd(20px 0 0, 0, flex)
+    flex-wrap wrap
+    border-bottom 1px solid #384162
+    &-ln
+        mpd(0, 0.8rem 1rem)
+        resetLn(#8F99B5, lighten(#8F99B5, 30%))
+        background #1E253C
+        &.active
+            background #384162
+            color lighten(#8F99B5, 30%)
+    &-content
+        &-item
+            display none
+            height 0px
+            &.active
+                display block
+                height auto
+
+.input
+    mpd(20px 0 0, 0.8rem 1rem)
+    b(1, #1E253C)
+    trans()
+    box-sizing border-box
+    width 100%
+    background #4F5979
+    border-radius 0
+    color white
+    font-weight 300
+    line-height 1
+    overflow hidden
+    outline none
+    appearance none
+    &::placeholder
+        color #8F99B5
+    &:-webkit-autofill
+        b(1, #1E253C)
+        box-shadow inset 0 0 0 1000px #4F5979
+        -webkit-text-fill-color white
+        &:focus
+            b(1, #00A8AA)
+    &:focus
+        b(1, #00A8AA)
+    &-error
+        mpd(0.1rem 0 0, 0 0 0 1rem)
+        color #D4324E
+        font-size 0.9em
+textarea.input
+    height auto
+    resize none
+    line-height 1.5
+
+
+.checkbox
+    mpd()
+    trans()
+    b(1, #1E253C)
+    box-sizing border-box
+    width 40px
+    height 26px
+    border-radius 13px
+    background #4F5979
+    appearance none
+    outline none
+    cursor pointer
+    &:before
+        mpd()
+        trans()
+        content ''
+        width 24px
+        height 24px
+        background white
+        border-radius 50%
+    &:checked
+        background #00A8AA
+        &:before
+            margin-left 14px
+    &-label
+        mpd(20px 0 0, 0, flex)
+        align-items center
+        cursor pointer
+        user-select none
+    &-text
+        mpd(0 0 0 0.8em)
+        color #8F99B5
+
+
+.radiolist
+    margin-right -1px
+    margin-top 15px
+    .fa-check
+        trans()
+        opacity 0
+        color white
+    &-label
+        mpd(0 1px 0 0)
+        height 100%
+        outline none
+        border none
+        appearance none
+        user-select none
+        cursor pointer
+    &-text
+        mpd(0, 3px 10px, flex)
+        resetLn(#ACB3C6, lighten(#ACB3C6, 80%))
+        trans()
+        align-items center
+        justify-content center
+        height 100%
+        min-height 2.5em
+        position relative
+        box-sizing border-box
+        background #4F5979
+        text-align center
+        // &:hover
+        //     background lighten(#4F5979, 13%)
+    &-input
+        mpd()
+        outline none
+        border none
+        appearance none
+        &:checked + .radiolist-text
+            background lighten(#4F5979, 13%)
+            color lighten(#ACB3C6, 80%)
+            .fa-check
+                opacity 1
+
+
+.label
+    mpd(20px 0 0, 0 0 0 1rem)
+    color #8F99B5
+    + *
+        margin-top 5px
+
+
+.text
+    mpd(20px 0 0, 0)
+    font-size 1em
+
+
+.row-view
+    margin-top 20px
+    background #384162
+    position relative
+    &-content
+        margin-top 10px
+        padding-right 15px
+        padding-left 15px
+        padding-bottom 15px
+    &-sort
+        mpd(0, 15px, flex)
+        resetLn(#8F99B5, lighten(#8F99B5, 50%))
+        height 100%
+        align-items center
+        background #4F5979
+        color #8F99B5
+        user-select none
+        &, &:hover
+            cursor ns-resize
+    &-divider
+        mpd()
+        width 100%
+        height 1px
+
+
+.detail-view
+    &-row
+        margin-top 1px
+        border-bottom 1px solid transparent
+
+
+.action
+    &-row
+        mpd(0 -1px 0 0, 0, flex)
+        align-items stretch
+        width 100%
+        height 100%
+        .action-btn
+            margin-right 1px
+    &-btn
+        mpd(0, 10px 15px, flex)
+        resetLn(#ACB3C6, lighten(#ACB3C6, 80%))
+        align-items center
+        justify-content center
+        flex-basis 0
+        flex-grow 1
+        width 100%
+        max-width 100%
+        background #4F5979
+        border-bottom 3px solid #34C3F3
+        &.update
+            border-color #FFB25C
+        &.view
+            border-color #00A8AA
+        &.delete
+            border-color #EE4C67
+
+
+.modal
+    background transparent
+    padding 15px
+    &-xl
+        width 100%
+        max-width 1200px
+
+
+.ace-editor
+    mpd(5px 0 0)
+    position relative
+    min-height 400px
+    overflow auto
+
+
+*[data-ace]
+    position absolute
+    top 0px
+    left 0px
+    right 0px
+    bottom 0px
+
+
+.tox
+    margin-top 5px !important
+
+
+.loader
+    mpd()
+    position absolute
+    top 0px
+    left 0px
+    right 0px
+    bottom 0px
+    background alpha(#1D243B, 63%)
+    &-img
+        position absolute
+        top 50%
+        left 50%
+        margin -5px 0 0 -28px
+
+
+.green
+    color #00A8AA

@@ -1,0 +1,114 @@
+{
+  "require": {
+    "php": ">=7",
+    "yiisoft/yii2": "~2.0.0",
+    "yiisoft/yii2-swiftmailer": "~2.1.0",
+    "twbs/bootstrap": "4.2.1",
+    "jquery/jquery": "3.3.1",
+    "jquery/jquery-ui": "1.12.1",
+    "fancyapps/fancybox": "3.5.6",
+    "stevenwanderski/bxslider-4": "4.2.15",
+    "robinherbots/inputmask": "4.0.6",
+    "fortawesome/font-awesome": "5.7.1",
+    "ajaxorg/ace-builds": "1.4.2",
+    "tinymce/tinymce-dist": "5.0.0"
+  },
+  "require-dev": {
+      "yiisoft/yii2-debug": "~2.0.0",
+      "yiisoft/yii2-gii": "~2.0.0"
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "jquery/jquery",
+        "version": "3.3.1",
+        "dist": {
+          "url": "https://codeload.github.com/jquery/jquery/zip/3.3.1",
+          "type": "zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "jquery/jquery-ui",
+        "version": "1.12.1",
+        "dist": {
+          "url": "https://jqueryui.com/resources/download/jquery-ui-1.12.1.zip",
+          "type": "zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "fortawesome/font-awesome",
+        "version": "5.7.1",
+        "dist": {
+          "url": "https://codeload.github.com/fortawesome/font-awesome/zip/5.7.1",
+          "type": "zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "fancyapps/fancybox",
+        "version": "3.5.6",
+        "dist": {
+          "url": "https://github.com/fancyapps/fancybox/archive/v3.5.6.zip",
+          "type": "zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "stevenwanderski/bxslider-4",
+        "version": "4.2.15",
+        "dist": {
+          "url": "https://github.com/stevenwanderski/bxslider-4/archive/v4.2.15.zip",
+          "type": "zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "robinherbots/inputmask",
+        "version": "4.0.6",
+        "dist": {
+          "url": "https://github.com/RobinHerbots/Inputmask/archive/4.x.zip",
+          "type": "zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "ajaxorg/ace-builds",
+        "version": "1.4.2",
+        "dist": {
+          "url": "https://github.com/ajaxorg/ace-builds/archive/v1.4.2.zip",
+          "type": "zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "tinymce/tinymce-dist",
+        "version": "5.0.0",
+        "dist": {
+          "url": "https://github.com/tinymce/tinymce-dist/archive/5.0.0.zip",
+          "type": "zip"
+        }
+      }
+    }
+  ]
+}
