@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "551cffe8c9d7fc43d55ae6517adbda29",
+    "content-hash": "e2abc26aca496a20c23fdbac7de7c63c",
     "packages": [
         {
             "name": "ajaxorg/ace-builds",
@@ -353,6 +353,17 @@
             "dist": {
                 "type": "zip",
                 "url": "https://jqueryui.com/resources/download/jquery-ui-1.12.1.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "owlcarousel2/owlcarousel2",
+            "version": "2.3.4",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/OwlCarousel2/OwlCarousel2/archive/2.3.4.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -709,16 +720,16 @@
     "packages-dev": [
         {
             "name": "bower-asset/bootstrap",
-            "version": "v3.4.0",
+            "version": "v3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "4c547f2175b9a05aa43551f6927da83fe249ce42"
+                "reference": "68b0d231a13201eb14acd3dc84e51543d16e5f7e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/4c547f2175b9a05aa43551f6927da83fe249ce42",
-                "reference": "4c547f2175b9a05aa43551f6927da83fe249ce42",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/68b0d231a13201eb14acd3dc84e51543d16e5f7e",
+                "reference": "68b0d231a13201eb14acd3dc84e51543d16e5f7e",
                 "shasum": null
             },
             "require": {
