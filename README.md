@@ -1,5 +1,4 @@
-# gulp-web
-Web Разработка с Gulp
+##### CMS
 [![Yii2](https://img.shields.io/badge/Powered_by-Yii_Framework-green.svg?style=flat)](https://www.yiiframework.com/)
 
 - <a href="https://nodejs.org/en/" target="_blank">Node.js</a>
