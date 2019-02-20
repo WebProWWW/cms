@@ -9,6 +9,8 @@ use widgets\Form;
 
 /* @var \yii\web\View $this */
 /* @var \modules\site\backend\models\FormModel $model */
+
+$this->title = 'Авторизация'
 ?>
 <div class="container my-auto">
     <div class="row justify-content-center">

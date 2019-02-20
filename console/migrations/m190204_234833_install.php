@@ -128,6 +128,10 @@ class m190204_234833_install extends Migration
         $this->createIndex('idx-block_slider_slide-order', 'block_slider_slide', 'order');
         $this->createIndex('idx-block_slider_slide-slider_id', 'block_slider_slide', 'slider_id');
         $this->addForeignKey('fk-block_slider_slide-block_slider', 'block_slider_slide', 'slider_id', 'block_slider', 'id', 'CASCADE', 'RESTRICT');
+
+        /**
+         * BLOG
+         * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     /**
      * POST
      */
@@ -149,6 +153,19 @@ class m190204_234833_install extends Migration
         $this->createIndex('idx-post-active', 'post', 'active');
         $this->createIndex('idx-post-order', 'post', 'order');
         $this->createIndex('idx-post-alias', 'post', 'alias');
+
+        /**
+         * CATALOG
+         * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+    /**
+     * PRODUCT_IMAGE
+     */
+        $this->createTable('product_image', [
+            'id' => $this->primaryKey(),
+            'product_id' => $this->integer()->null(),
+            'src' => $this->string()->notNull(),
+        ]);
+        $this->createIndex('idx-product_image-product_id', 'product_image', 'product_id');
     /**
      * PRODUCT_CATEGORY
      */
@@ -188,9 +205,11 @@ class m190204_234833_install extends Migration
         $this->createIndex('idx-product-alias', 'product', 'alias');
         $this->createIndex('idx-product-order', 'product', 'order');
         $this->addForeignKey('fk-product-product_category', 'product', 'category_id', 'product_category', 'id', 'SET NULL', 'RESTRICT');
-    /**
-     * INSERT DATA
-     */
+        $this->addForeignKey('fk-product-product_image', 'product_image', 'product_id', 'product', 'id', 'SET NULL', 'RESTRICT');
+
+        /**
+         * INSERT DATA
+         * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
         $this->insertUser();
         $this->insertDefaultPage();
     }

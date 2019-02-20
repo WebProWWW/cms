@@ -9,6 +9,8 @@ use widgets\NavTiled;
 
 /* @var \yii\web\View $this */
 
+$this->title = 'Меню'
+
 ?>
 <div class="mt-auto">
     <?= NavTiled::widget(['items'=>[

@@ -5,6 +5,7 @@ namespace modules\catalog\models;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\helpers\ArrayHelper;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "product".
@@ -23,10 +24,12 @@ use yii\helpers\ArrayHelper;
  * @property int $updated_at
  *
  * @property ProductCategory $category
+ * @property ProductImage[] $images
+ * @property ProductImage $image
  *
  * @property array $categoryItems
  */
-class Product extends \yii\db\ActiveRecord
+class Product extends ActiveRecord
 {
 
     public static function tableName() { return 'product'; }
@@ -43,7 +46,7 @@ class Product extends \yii\db\ActiveRecord
             [['title', 'alias', 'content_title', 'content_desc'], 'required'],
             [['title', 'alias', 'description', 'keywords', 'content_title', 'content_desc'], 'string', 'max' => 255],
             [['alias'], 'unique'],
-            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductCategory::className(), 'targetAttribute' => ['category_id' => 'id']],
+            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductCategory::class, 'targetAttribute' => ['category_id' => 'id']],
         ];
     }
 
@@ -75,5 +78,21 @@ class Product extends \yii\db\ActiveRecord
     {
         $categories =  ProductCategory::find()->all();
         return ArrayHelper::map($categories, 'id','title');
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getImages()
+    {
+        return $this->hasMany(ProductImage::class, ['product_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getImage()
+    {
+        return $this->hasOne(ProductImage::class, ['product_id' => 'id']);
     }
 }

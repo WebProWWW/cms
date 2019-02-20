@@ -4,6 +4,7 @@ namespace modules\catalog\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "product_category".
@@ -21,7 +22,7 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property Product[] $products
  */
-class ProductCategory extends \yii\db\ActiveRecord
+class ProductCategory extends ActiveRecord
 {
 
     public static function tableName() { return 'product_category'; }
