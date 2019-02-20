@@ -45,7 +45,8 @@ class Product extends ActiveRecord
         return [
             [['category_id', 'active', 'order', 'created_at', 'updated_at'], 'integer'],
             [['title', 'alias', 'content_title', 'content_desc'], 'required'],
-            [['title', 'alias', 'description', 'keywords', 'content_title', 'content_desc'], 'string', 'max' => 255],
+            [['title', 'alias', 'description', 'keywords', 'content_title'], 'string', 'max' => 255],
+            [['content_desc'], 'string'],
             [['alias'], 'unique'],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductCategory::class, 'targetAttribute' => ['category_id' => 'id']],
         ];
