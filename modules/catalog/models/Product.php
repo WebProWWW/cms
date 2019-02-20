@@ -81,6 +81,20 @@ class Product extends ActiveRecord
         return ArrayHelper::map($categories, 'id','title');
     }
 
-    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getImages()
+    {
+        return $this->hasMany(ProductImage::class, ['product_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getImage()
+    {
+        return $this->hasOne(ProductImage::class, ['product_id' => 'id']);
+    }
 
 }
