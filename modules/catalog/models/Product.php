@@ -95,4 +95,5 @@ class Product extends ActiveRecord
     {
         return $this->hasOne(ProductImage::class, ['product_id' => 'id']);
     }
+
 }
