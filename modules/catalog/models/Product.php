@@ -28,6 +28,7 @@ use yii\db\ActiveRecord;
  * @property ProductImage $image
  *
  * @property array $categoryItems
+ * 
  */
 class Product extends ActiveRecord
 {
