@@ -31,7 +31,7 @@ class Backend extends AssetBundle
         'css/main.css',
     ];
     public $js = [
-        'js/main.js?v=002',
+        'js/main.js?v=003',
     ];
     public $depends = [
         TwbsGrid::class,

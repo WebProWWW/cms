@@ -277,7 +277,7 @@ Loader = (function() {
       menubar: false,
       height: 500,
       plugins: "link, code, paste, lists",
-      toolbar: 'undo redo | bold italic lists | alignleft aligncenter alignright | link | code',
+      toolbar: 'undo redo | bold italic | numlist bullist | alignleft aligncenter alignright | link | code',
       paste_as_text: true
     });
   });
