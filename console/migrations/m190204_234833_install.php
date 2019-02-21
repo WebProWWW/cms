@@ -108,7 +108,7 @@ class m190204_234833_install extends Migration
         $this->createTable('block_html', [
             'id' => $this->primaryKey(),
             'description' => $this->string()->notNull(),
-            'content' => $this->text(),
+            'content' => $this->longText(),
         ]);
     /**
      * BLOCK_HTML_EDITOR
@@ -116,7 +116,7 @@ class m190204_234833_install extends Migration
         $this->createTable('block_html_editor', [
             'id' => $this->primaryKey(),
             'description' => $this->string()->notNull(),
-            'content' => $this->text(),
+            'content' => $this->longText(),
         ]);
     /**
      * BLOCK_SLIDER
@@ -134,8 +134,7 @@ class m190204_234833_install extends Migration
             'active' => $this->tinyInteger(1)->defaultValue(1)->notNull(),
             'img' => $this->string()->notNull(),
             'url' => $this->string(),
-            'url_active' => $this->tinyInteger(1)->defaultValue(1)->notNull(),
-            'content' => $this->text(),
+            'content' => $this->longText(),
             'slider_id' => $this->integer()->notNull(),
         ]);
         $this->createIndex('idx-block_slider_slide-active', 'block_slider_slide', 'active');
@@ -160,7 +159,7 @@ class m190204_234833_install extends Migration
             'content_img' => $this->string()->null(),
             'content_title' => $this->string()->notNull(),
             'content_desc' => $this->string()->notNull(),
-            'content' => $this->text()->null(),
+            'content' => $this->longText()->null(),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
         ]);
@@ -192,7 +191,7 @@ class m190204_234833_install extends Migration
             'keywords' => $this->string()->null(),
             'content_img' => $this->string()->null(),
             'content_title' => $this->string()->notNull(),
-            'content_desc' => $this->text()->notNull(),
+            'content_desc' => $this->longText()->notNull(),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
         ]);
@@ -211,7 +210,7 @@ class m190204_234833_install extends Migration
             'description' => $this->string()->null(),
             'keywords' => $this->string()->null(),
             'content_title' => $this->string()->notNull(),
-            'content_desc' => $this->string()->notNull(),
+            'content_desc' => $this->longText()->notNull(),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
         ]);
@@ -288,5 +287,10 @@ class m190204_234833_install extends Migration
                 time(),
             ],
         ]);
+    }
+
+    private function longText()
+    {
+        return $this->getDb()->getSchema()->createColumnSchemaBuilder('LONGTEXT');
     }
 }
