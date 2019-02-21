@@ -276,8 +276,8 @@ Loader = (function() {
       selector: `#${$(textarea).attr('data-tinymce')}`,
       menubar: false,
       height: 500,
-      plugins: "link, code, paste",
-      toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | link | code',
+      plugins: "link, code, paste, lists",
+      toolbar: 'undo redo | bold italic lists | alignleft aligncenter alignright | link | code',
       paste_as_text: true
     });
   });
