@@ -10,10 +10,10 @@ use widgets\Form;
 use yii\helpers\Html;
 
 /* @var \yii\web\View $this */
-/* @var \modules\page\models\BlockHtml $model */
+/* @var \modules\site\models\BlockHtml $model */
 
-$this->title = 'Блок html';
-$this->params['breadcrumbs'][] = 'html';
+$this->title = 'Html';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container">
     <?php $form = Form::begin(['model' => $model]) ?>

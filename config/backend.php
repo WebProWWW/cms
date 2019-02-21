@@ -12,7 +12,6 @@ return [
         'site'   => [
             'class'    => \modules\site\backend\Module::class,
             'modules'  => [
-//                'page'     => ['class' => \modules\page\backend\Module::class],
                 'catalog'  => ['class' => \modules\catalog\backend\Module::class],
                 'blog'     => ['class' => \modules\blog\backend\Module::class],
             ],

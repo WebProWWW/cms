@@ -6,14 +6,17 @@ use Yii;
 use yii\db\ActiveRecord;
 
 /**
+ *
  * Class Block
  * @package modules\page\models
  *
  * @property int $id
- * @property integer $model_id
- * @property string $model_class
- *
- * @property ActiveRecord $block
+ * @property int $model_id
+ * @property string $content
+ * @property string $title
+ * @property string $description
+ * @property ActiveRecord | BlockInterface | null $model_class
+ * @property ActiveRecord | BlockInterface | null $model
  *
  */
 class Block extends ActiveRecord
@@ -33,7 +36,7 @@ class Block extends ActiveRecord
     public function afterDelete()
     {
         parent::afterDelete();
-        $this->block->delete();
+        $this->model->delete();
     }
 
     /**
@@ -44,61 +47,54 @@ class Block extends ActiveRecord
     {
         $models = [
             'BlockHtml' => BlockHtml::class,
-            'BlockSlider' => BlockSlider::class,
         ];
         if (key_exists($arrayKey, $models)) {
             return $models[$arrayKey];
-        }
-        return false;
-    }
-
-    /**
-     * @param string $arrayKey
-     * @return null|ActiveRecord
-     * @throws \yii\base\InvalidConfigException
-     */
-    public static function createModel($arrayKey)
-    {
-        if ($className = self::getClassName($arrayKey)) {
-            return Yii::createObject($className);
         }
         return null;
     }
 
     /**
-     * @param int|string $id
-     * @return ActiveRecord
+     * @param string $arrayKey
+     * @return null | ActiveRecord
+     */
+    public static function createModel($arrayKey)
+    {
+        /* @var ActiveRecord | null $model */
+        $model = null;
+        if ($className = self::getClassName($arrayKey)) {
+            try {
+                $model = Yii::createObject($className);
+            } catch (\Exception $exception) {}
+        }
+        return $model;
+    }
+
+    /**
+     * @param int | string $id
+     * @return null | ActiveRecord | BlockInterface
      */
     public static function findModel($id)
     {
-        return self::findOne(['id' => $id])->block;
+        return self::findOne(['id' => $id])->model;
     }
 
 
-//    public function attributeLabels()
-//    {
-//        return [
-//            'id' => 'ID',
-//            'title' => 'Название',
-//            'description' => 'Описание',
-//            'model_class_name' => 'Class',
-//        ];
-//    }
-
-    public function getBlock()
+    /**
+     * @return null | ActiveRecord | BlockInterface
+     */
+    public function getModel()
     {
-        return $this->model_class::findOne(['id' => $this->model_id]);
+        try {
+            return $this->model_class::findOne(['id' => $this->model_id]);
+        } catch (\Exception $exception) {}
+        return null;
     }
 
-//    /**
-//     * @return \yii\db\ActiveQuery
-//     * @throws \yii\base\InvalidConfigException
-//     */
-//    public function getPageBlocks()
-//    {
-//        return $this
-//            ->hasMany(Page::class, ['id' => 'page_id'])
-//            ->viaTable('page_block', ['block_id' => 'id']);
-//    }
+    public function getContent() { return $this->model->blockContent; }
+
+    public function getTitle() { return $this->model->blockTitle; }
+
+    public function getDescription() { return $this->model->blockDescription; }
 
 }

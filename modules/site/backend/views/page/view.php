@@ -14,6 +14,7 @@ use yii\helpers\Html;
 /* @var \modules\site\models\Page $model */
 /* @var \yii\web\View $this */
 
+$this->title = 'Страницы';
 $this->params['breadcrumbs'][] = 'Просмотр';
 
 ?>

@@ -52,6 +52,10 @@ class BlockController extends Controller
     {
         $model = Block::createModel($key);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $block = new Block();
+            $block->model_class = Block::getClassName($key);
+            $block->model_id = $model->id;
+            $block->save(false);
             $this->redirect(['index']);
         }
         return $this->render($view, ['model'=>$model]);

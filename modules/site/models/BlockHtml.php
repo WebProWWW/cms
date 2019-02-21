@@ -7,16 +7,19 @@ use yii\db\ActiveRecord;
 use yii\helpers\Html;
 
 /**
- * This is the model class for table "block_html".
+ * Class BlockHtml
+ * @package modules\site\models
  *
  * @property int $id
  * @property string $description
  * @property string $content
+ * @property string $view
+ * @property string $blockTitle
+ * @property string $blockContent
+ * @property string $blockDescription
  */
-class BlockHtml extends ActiveRecord
+class BlockHtml extends ActiveRecord implements BlockInterface
 {
-    public $title = 'Блок html';
-    public $view = 'html';
 
     public static function tableName() { return 'block_html'; }
 
@@ -28,6 +31,7 @@ class BlockHtml extends ActiveRecord
         ];
     }
 
+
     public function attributeLabels()
     {
         return [
@@ -37,25 +41,38 @@ class BlockHtml extends ActiveRecord
         ];
     }
 
+
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {
-//            if ($insert) {}
+            // if ($insert) {}
             $this->content = Html::encode($this->content);
             return true;
         }
         return false;
     }
 
-    public function afterSave($insert, $changedAttributes)
+
+    public function getBlockTitle()
     {
-        parent::afterSave($insert, $changedAttributes);
-        if ($insert) {
-            $model = new Block();
-            $model->model_id = $this->id;
-            $model->model_class = self::class;
-            $model->save(false);
-        }
+        return 'Блок html';
     }
 
+
+    public function getBlockContent()
+    {
+        return Html::decode($this->content);
+    }
+
+
+    public function getBlockDescription()
+    {
+        return $this->description;
+    }
+
+
+    public function getView()
+    {
+        return 'html';
+    }
 }
