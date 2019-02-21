@@ -108,11 +108,11 @@ use widgets\RowView;
                     ],
                     'columns' => [
                         [
-                            'value' => 'block.title',
+                            'value' => 'title',
                             'class' => 'col-12 mt-5px clip label',
                         ],
                         [
-                            'value' => 'block.description',
+                            'value' => 'description',
                             'class' => 'col-12 mt-5px clip',
                         ],
                     ],
