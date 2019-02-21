@@ -7,28 +7,26 @@ use yii\db\ActiveRecord;
 use yii\helpers\Html;
 
 /**
- * Class BlockHtml
- * @package modules\site\models
+ * This is the model class for table "block_html_editor".
  *
  * @property int $id
  * @property string $description
  * @property string $content
- * @property string $view
- * @property string $blockTitle
- * @property string $blockContent
- * @property string $blockDescription
  */
-class BlockHtml extends ActiveRecord implements BlockInterface
+class BlockHtmlEditor extends ActiveRecord implements BlockInterface
 {
-    const VIEW = 'html';
+    const VIEW = 'html-editor';
 
-    public static function tableName() { return 'block_html'; }
+
+    public static function tableName() { return 'block_html_editor'; }
+
 
     public function rules()
     {
         return [
             [['description'], 'required'],
             [['content'], 'string'],
+            [['description'], 'string', 'max' => 255],
         ];
     }
 
@@ -38,27 +36,23 @@ class BlockHtml extends ActiveRecord implements BlockInterface
         return [
             'id' => 'ID',
             'description' => 'Описание блока',
-            'content' => 'Содержимое (html код)',
+            'content' => 'Содержимое',
         ];
     }
 
 
     public function beforeSave($insert)
     {
-        if (parent::beforeSave($insert)) {
-            // if ($insert) {}
-            $this->content = Html::encode($this->content);
-            return true;
-        }
-        return false;
+        $this->content = Html::encode($this->content);
+        return parent::beforeSave($insert);
     }
 
 
-    public function getBlockTitle() { return 'Html'; }
+    public function getView() { return self::VIEW; }
+
+    public function getBlockTitle() { return 'Html редактор'; }
 
     public function getBlockContent() { return Html::decode($this->content); }
 
     public function getBlockDescription() { return $this->description; }
-
-    public function getView() { return self::VIEW; }
 }

@@ -34,7 +34,6 @@ $this->params['breadcrumbs'][] = 'Просмотр';
         'actions' => ($model->default) ? ['update'] : ['update', 'delete'],
     ]) ?>
 
-
     <?= RowView::widget([
         'dataProvider' => new ActiveDataProvider([
             'query' => $model->getPageBlocks()->with('block')->orderBy('order'),
@@ -55,10 +54,11 @@ $this->params['breadcrumbs'][] = 'Просмотр';
         'sortable' => ['url' => ['block-sort', 'id' => $model->id]],
         'columns' => [
             [
-                'value' => 'block.block.title',
+                'value' => 'block.title',
                 'class' => 'label col-12 mt-5px',
             ],
-            'block.block.description',
+            'block.description',
         ],
     ]) ?>
+
 </div>

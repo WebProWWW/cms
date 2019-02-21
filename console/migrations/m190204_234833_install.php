@@ -15,14 +15,20 @@ class m190204_234833_install extends Migration
     {
         return [
             'user',
+
             'page',
-            'block',
             'page_block',
+
+            'block',
             'block_html',
+            'block_html_editor',
             'block_slider',
             'block_slider_slide',
+
             'post',
+
             'product',
+            'product_image',
             'product_category',
         ];
     }
@@ -100,6 +106,14 @@ class m190204_234833_install extends Migration
      * BLOCK_HTML
      */
         $this->createTable('block_html', [
+            'id' => $this->primaryKey(),
+            'description' => $this->string()->notNull(),
+            'content' => $this->text(),
+        ]);
+    /**
+     * BLOCK_HTML_EDITOR
+     */
+        $this->createTable('block_html_editor', [
             'id' => $this->primaryKey(),
             'description' => $this->string()->notNull(),
             'content' => $this->text(),

@@ -14,6 +14,7 @@ namespace modules\site\models;
  * @property string $blockTitle
  * @property string $blockContent
  * @property string $blockDescription
+ * @property string $view
  */
 interface BlockInterface
 {

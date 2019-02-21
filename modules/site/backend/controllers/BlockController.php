@@ -44,7 +44,7 @@ class BlockController extends Controller
             }
             return $this->redirect(['index']);
         }
-        return $this->render($model->view, ['model'=>$model]);
+        return $this->render($model->view, ['model' => $model]);
     }
 
 

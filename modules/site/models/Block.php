@@ -21,6 +21,13 @@ use yii\db\ActiveRecord;
  */
 class Block extends ActiveRecord
 {
+    const HTML              = BlockHtml::class;
+    const HTML_KEY          = 'BlockHtml';
+    const HTML_VIEW         = BlockHtml::VIEW;
+
+    const HTML_EDITOR       = BlockHtmlEditor::class;
+    const HTML_EDITOR_KEY   = 'BlockHtmlEditor';
+    const HTML_EDITOR_VIEW  = BlockHtmlEditor::VIEW;
 
     public static function tableName() { return 'block'; }
 
@@ -41,12 +48,13 @@ class Block extends ActiveRecord
 
     /**
      * @param string $arrayKey
-     * @return bool|string
+     * @return bool | string
      */
     public static function getClassName($arrayKey)
     {
         $models = [
-            'BlockHtml' => BlockHtml::class,
+            self::HTML_KEY => self::HTML,
+            self::HTML_EDITOR_KEY => self::HTML_EDITOR,
         ];
         if (key_exists($arrayKey, $models)) {
             return $models[$arrayKey];
@@ -90,6 +98,8 @@ class Block extends ActiveRecord
         } catch (\Exception $exception) {}
         return null;
     }
+
+    public function getView() { return $this->model->view; }
 
     public function getContent() { return $this->model->blockContent; }
 
