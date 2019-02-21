@@ -57,8 +57,9 @@ do ->
             selector: "##{$(textarea).attr 'data-tinymce'}"
             menubar: off
             height: 500
-            plugins: "link, code"
+            plugins: "link, code, paste"
             toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | link | code'
+            paste_as_text: on
 
     # $.fancybox.open src:'#page-block-type-list'
 
