@@ -36,7 +36,7 @@ $this->title = 'Меню'
         ],
         [
             'text' => 'Пользователи',
-            'url' => ['/site/user/index'],
+            'url' => ['/site/user/default/index'],
             'icon' => '<i class="fas fa-users"></i>',
         ],
         [

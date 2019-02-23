@@ -1,6 +1,6 @@
 <?php
 
-namespace modules\site\models;
+namespace modules\user\models;
 
 use components\user\Access;
 

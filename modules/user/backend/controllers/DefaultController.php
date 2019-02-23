@@ -1,18 +1,19 @@
 <?php
 
-namespace modules\site\backend\controllers;
+namespace modules\user\backend\controllers;
+
+use modules\user\models\User;
 
 use Yii;
-use modules\site\models\User;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
- * UserController implements the CRUD actions for User model.
+ * Class DefaultController
+ * @package modules\user\backend\controllers
  */
-class UserController extends Controller
+class DefaultController extends Controller
 {
     public function init()
     {

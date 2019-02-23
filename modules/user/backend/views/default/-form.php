@@ -3,12 +3,8 @@
 use widgets\Form;
 use components\user\Access;
 
-use yii\helpers\Html;
-use yii\widgets\ActiveForm;
-
-
 /* @var $this yii\web\View */
-/* @var $model modules\site\models\User */
+/* @var $model \modules\user\models\User */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 <div class="container">
@@ -26,8 +22,12 @@ use yii\widgets\ActiveForm;
             <?= $form->dropdownWithLabelError('role', Access::roles()) ?>
         </div>
         <div class="wall mt-1px">
-            <?= $form->inputPasswordWithLabelError('password') ?>
-            <?= $form->inputPasswordWithLabelError('password_repeat') ?>
+            <?= $form->inputPasswordWithLabelError('password', [
+                'input' => ['autocomplete' => 'new-password'],
+            ]) ?>
+            <?= $form->inputPasswordWithLabelError('password_repeat', [
+                'input' => ['autocomplete' => 'new-password'],
+            ]) ?>
         </div>
     <?php Form::end() ?>
 

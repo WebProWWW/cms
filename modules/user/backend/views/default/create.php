@@ -1,9 +1,7 @@
 <?php
 
-use yii\helpers\Html;
-
 /* @var $this yii\web\View */
-/* @var $model modules\site\models\User */
+/* @var $model \modules\user\models\User */
 
 $this->title = 'Пользователи';
 $this->params['breadcrumbs'][] = 'Создать';

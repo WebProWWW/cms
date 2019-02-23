@@ -12,8 +12,9 @@ return [
         'site'   => [
             'class'    => \modules\site\frontend\Module::class,
             'modules'  => [
-                'catalog'  => ['class' => \modules\catalog\backend\Module::class],
-                'blog'     => ['class' => \modules\blog\backend\Module::class],
+//                'catalog'  => ['class' => \modules\catalog\frontend\Module::class], // TODO catalog frontend module
+//                'blog'     => ['class' => \modules\blog\frontend\Module::class], // TODO blog frontend module
+                'user'     => [ 'class' => \modules\user\frontend\Module::class ],
             ],
         ],
     ],

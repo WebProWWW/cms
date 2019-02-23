@@ -14,6 +14,7 @@ return [
             'modules'  => [
                 'catalog'  => ['class' => \modules\catalog\backend\Module::class],
                 'blog'     => ['class' => \modules\blog\backend\Module::class],
+                'user'     => [ 'class' => \modules\user\backend\Module::class ],
             ],
         ],
     ],
