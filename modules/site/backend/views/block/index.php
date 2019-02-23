@@ -19,14 +19,14 @@ $this->params['breadcrumbs'][] = 'Список';
                 'create',
                 'view'     => Block::HTML_VIEW,
                 'key'      => Block::HTML_KEY,
-            ]) ?>">Создать ( html )</a>
+            ]) ?>">Создать (html)</a>
         </div>
         <div class="col-12 col-sm-6 col-md-auto">
             <a class="btn btn-green mt-1px" href="<?= Url::to([
                 'create',
                 'view'     => Block::HTML_EDITOR_VIEW,
                 'key'      => Block::HTML_EDITOR_KEY,
-            ]) ?>">Создать ( html редактор )</a>
+            ]) ?>">Создать (html редактор)</a>
         </div>
     </div>
 

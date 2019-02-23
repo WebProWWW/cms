@@ -7,8 +7,10 @@
 
 use widgets\Form;
 
+use yii\helpers\Url;
+
 /* @var \yii\web\View $this */
-/* @var \modules\site\backend\models\FormModel $model */
+/* @var \modules\site\models\FormLogin $model */
 
 $this->title = 'Авторизация'
 ?>
@@ -20,6 +22,11 @@ $this->title = 'Авторизация'
                     <?= $form->inputTextWithError('email') ?>
                     <?= $form->inputPasswordWithError('password') ?>
                     <?= $form->checkbox('remember') ?>
+                    <!-- TODO user restore link
+                    <div class="mt-15px text-right em-9">
+                        <a href="<?= Url::to(['/site/default/restore']) ?>">Забыл пароль</a>
+                    </div>
+                    -->
                     <?= $form->submit('Войти') ?>
                 <?php Form::end() ?>
             </div>

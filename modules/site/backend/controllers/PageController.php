@@ -52,6 +52,9 @@ class PageController extends Controller
         $blockDataProvider = new ActiveDataProvider([
             'query' => Block::find(),
         ]);
+        if ($model->action === null) {
+            $model->action = '/site/default/index';
+        }
         return $this->render('create', [
             'model' => $model,
             'blockDataProvider' => $blockDataProvider,

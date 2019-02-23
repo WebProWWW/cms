@@ -33,7 +33,6 @@ $this->params['breadcrumbs'][] = 'Список';
     <div class="divider"></div>
     <?= RowView::widget([
         'dataProvider' => $dataProvider,
-//        'actions' => ['delete', 'update'],
         'sortable' => ['url' => ['sort']],
         'columns' => [
             [

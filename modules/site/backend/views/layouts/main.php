@@ -68,16 +68,21 @@ use yii\helpers\ArrayHelper;
 
 <div class="footer">
     <div class="container mt-20px">
-        <div class="d-flex justify-content-center em-8">
+        <div class="d-flex justify-content-center align-items-center em-8">
             <div>
                 <a href="https://webprowww.github.io" target="_blank">WebPRO</a>
             </div>
-            <div>&nbsp;&nbsp;&nbsp;</div>
+            <div>&nbsp;&nbsp;|&nbsp;&nbsp;</div>
             <div>
-                <a href="https://www.yiiframework.com" target="_blank">Yii</a>
+                <a href="https://www.yiiframework.com" target="_blank">
+                    <?= Html::img('@web/img/yii_logo_dark.svg', [
+                        'class' => 'd-block',
+                        'height' => 14,
+                    ]) ?>
+                </a>
             </div>
             <?php if (YII_ENV_DEV): ?>
-                <div>&nbsp;&nbsp;&nbsp;</div>
+                <div>&nbsp;&nbsp;|&nbsp;&nbsp;</div>
                 <div>
                     <a href="<?= Url::to(['/gii']) ?>" target="_blank">Gii</a>
                 </div>

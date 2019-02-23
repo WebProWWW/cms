@@ -32,6 +32,7 @@ class RowView extends Widget
     public $actions = ['delete', 'update', 'view'];
     public $sortable = false; // ['url']
     public $columns = [];
+    public $attrLabel = false;
     public $afterContent;
 
     /**
@@ -151,11 +152,17 @@ class RowView extends Widget
     {
         $value = ArrayHelper::remove($opt, 'value');
         $format = ArrayHelper::remove($opt, 'format', 'text');
+        $attrLabel = ArrayHelper::remove($opt, 'attrLabel', $this->attrLabel);
         if (is_string($value)) {
+            $attr = $value;
             try {
                 $value = ArrayHelper::getValue($model, $value);
             } catch (\Exception $exception) {}
-            return $this->getColHtml(Yii::$app->formatter->format($value, $format), $opt);
+            $content = ''
+                .$this->getColLabel($model, $attr)
+                .Yii::$app->formatter->format($value, $format)
+            .'';
+            return $this->getColHtml($content, $opt);
         }
         if (is_callable($value)) {
             return $this->getColHtml(call_user_func($value, $model), $opt);
@@ -178,7 +185,11 @@ class RowView extends Widget
             $value = '';
             $format = 'text';
         }
-        return $this->getColHtml(Yii::$app->formatter->format($value, $format));
+        $content = ''
+            .$this->getColLabel($model, $attr)
+            .Yii::$app->formatter->format($value, $format)
+        .'';
+        return $this->getColHtml($content);
     }
 
     /**
@@ -188,7 +199,30 @@ class RowView extends Widget
      */
     private function getColHtml($content, $opt=[])
     {
-        return Html::tag('div', $content, ArrayHelper::merge(['class' => 'col clip mt-5px'], $opt));
+        return Html::tag('div', $content, ArrayHelper::merge([
+            'class' => 'col clip mt-5px'
+        ], $opt));
+    }
+
+    /**
+     * @param ActiveRecord $model
+     * @param string $attr
+     * @param array $opt
+     * @return string
+     */
+    private function getColLabel($model, $attr, $opt=[])
+    {
+        try {
+            $content = $model->getAttributeLabel($attr);
+        } catch (\Exception $exception) {
+            return '';
+        }
+        if ($this->attrLabel) {
+            return Html::tag('span', $content, ArrayHelper::merge([
+                'class' => 'label mp-0',
+            ], $opt));
+        }
+        return '';
     }
 
     /**

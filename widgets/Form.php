@@ -219,6 +219,22 @@ class Form extends Widget
 
     /**
      * @param string $attr
+     * @param array $opt
+     * @return string
+     */
+    public function inputPasswordWithLabelError($attr, $opt=[])
+    {
+        return ''
+            .$this->label($attr, ArrayHelper::getValue($opt, 'label', []))
+            .$this->inputPassword($attr, ArrayHelper::merge([
+                'placeholder' => false,
+            ], ArrayHelper::getValue($opt, 'input', [])))
+            .$this->error($attr, ArrayHelper::getValue($opt, 'error', []))
+        .'';
+    }
+
+    /**
+     * @param string $attr
      * @param array $items
      * @param array $opt
      * @return string

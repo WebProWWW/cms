@@ -35,6 +35,11 @@ $this->title = 'Меню'
             'icon' => '<i class="fas fa-blog"></i>',
         ],
         [
+            'text' => 'Пользователи',
+            'url' => ['/site/user/index'],
+            'icon' => '<i class="fas fa-users"></i>',
+        ],
+        [
             'text' => 'Настройки',
             'url' => ['/site/settings/index'],
             'icon' => '<i class="fas fa-cog"></i>',

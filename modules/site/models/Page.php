@@ -41,9 +41,10 @@ class Page extends ActiveRecord
     {
         return [
             [['active', 'order', 'created_at', 'updated_at'], 'integer'],
-            [['title', 'alias', 'active', 'action'], 'required'],
+            [['title', 'alias', 'active'], 'required'],
             [['title', 'alias', 'description', 'keywords', 'content_title', 'action'], 'string', 'max' => 255],
             [['alias'], 'unique'],
+            [['action'], 'required', 'message' => 'Необходимо выбрать "Содержимое"'],
             [['blocks_ids'], 'safe'],
         ];
     }

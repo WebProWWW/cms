@@ -87,6 +87,7 @@ use widgets\RowView;
                     </label>
                 </div><!-- .col -->
             </div><!-- .row -->
+            <?= $form->error('action') ?>
         </div>
 
         <div class="tab-content">
