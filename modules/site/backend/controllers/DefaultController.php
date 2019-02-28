@@ -4,9 +4,11 @@ namespace modules\site\backend\controllers;
 
 use components\user\Access;
 use modules\site\models\FormLogin;
+use widgets\Form;
 
 use Yii;
 use yii\web\Controller;
+use yii\web\Response;
 
 /**
  * Class DefaultController
@@ -27,8 +29,12 @@ class DefaultController extends Controller
         }
         $this->layout = 'base';
         $model = new FormLogin();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goHome();
+        if (Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if ($model->load(Yii::$app->request->post()) && $model->login()) {
+                return Form::success();
+            }
+            return Form::validate($model);
         }
         $model->password = '';
         return $this->render('login', ['model'=>$model]);

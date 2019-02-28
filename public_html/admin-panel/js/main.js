@@ -26,43 +26,16 @@ Loader = (function() {
       this.$debugMsg = this.$loaderHtml.find('.js-loader-debug');
     }
 
-    delay(ms, callBack = function() {}) {
+    delay(ms, callBack) {
       return setTimeout(callBack, ms);
     }
 
-    state(type) {
-      var $error, $progress, $success;
-      $progress = this.$loaderHtml.find('.js-loader-progress');
-      $success = this.$loaderHtml.find('.js-loader-success');
-      $error = this.$loaderHtml.find('.js-loader-error');
-      switch (type) {
-        case 'progress':
-          $progress.removeClass('d-none');
-          $success.addClass('d-none');
-          return $error.addClass('d-none');
-        case 'error':
-          $progress.addClass('d-none');
-          $success.addClass('d-none');
-          return $error.removeClass('d-none');
-        case 'success':
-          $progress.addClass('d-none');
-          $success.removeClass('d-none');
-          return $error.addClass('d-none');
-        case 'hide':
-          $progress.addClass('d-none');
-          $success.addClass('d-none');
-          return $error.addClass('d-none');
-      }
-    }
-
-    postJson(action, data, callBackData = {}) {
+    postJson(action, data) {
       if (this.process) {
         return false;
       }
-      this.data = callBackData;
       this.process = true;
       this.progress();
-      this.state('progress');
       if (this.csrf != null) {
         $.extend(data, data, {
           [`${this.csrf.csrfParam}`]: this.csrf.csrfToken
@@ -76,33 +49,18 @@ Loader = (function() {
       }).done((msg) => {
         if (this.debug) {
           console.log(msg);
-          this.$debugMsg.text(msg.message);
         }
-        this.state((function() {
-          switch (String(msg.status)) {
-            case '0':
-              return 'error';
-            case '200':
-              return 'success';
-            default:
-              return 'success';
-          }
-        })());
         return this.done(msg);
       }).always(() => {
         return this.delay(1000, () => {
           this.$el.find('#js-loader-html').remove();
-          this.$el.removeClass('js-loader-wrapper');
-          this.state('hide');
           this.process = false;
           return this.always();
         });
       }).fail((jqXHR, textStatus, errorThrown) => {
         if (this.debug) {
           console.log(errorThrown);
-          this.$debugMsg.text(textStatus);
         }
-        this.state('error');
         return this.fail(textStatus);
       });
       return true;
@@ -151,9 +109,9 @@ Loader = (function() {
 
   Loader.prototype.csrf = null;
 
-  Loader.prototype.data = {};
-
   Loader.prototype.debug = false;
+
+  Loader.prototype.$form = $({});
 
   Loader.prototype.process = false;
 
@@ -195,14 +153,47 @@ Loader = (function() {
 
 (function() {
   /* Widgets */
-  var $doc;
-  $doc = $(document);
   /* Widget Form */
+  var $doc, loader;
+  $doc = $(document);
+  loader = new Loader;
   $doc.on('focusin', '.input', function(e) {
     var $this;
     $this = $(this);
     $this.removeClass('error');
-    return $doc.find(`.input-error[for=${$this.attr('id')}]`).remove();
+    return $doc.find(`.input-error[for=${$this.attr('id')}]`).html('');
+  });
+  $doc.on('submit', 'form[data-ajax]', function(e) {
+    var $this, options;
+    e.preventDefault();
+    if (loader.process) {
+      return false;
+    }
+    $this = $(this);
+    options = $.parseJSON($this.attr('data-ajax'));
+    loader.appendTo($this.find('.js-ajax-loading'));
+    loader.done = function(data) {
+      var $input, errors, inputId, ref, results;
+      if (Number(data.formValidateStatus) === 1) {
+        if (options.onSuccess === 'refresh') {
+          return window.location.reload();
+        }
+      } else if (Number(data.formValidateStatus) === 0) {
+        if (options.onErrorValidate === 'addErrors') {
+          ref = data.errors;
+          results = [];
+          for (inputId in ref) {
+            errors = ref[inputId];
+            $input = $(`#${inputId}`);
+            $doc.find(`.input-error[for=${inputId}]`).html(errors[0]);
+            results.push($input.addClass('error'));
+          }
+          return results;
+        }
+      }
+    };
+    loader.postJson(options.action, $(this).serialize());
+    return false;
   });
   /* Widget RowView */
   $doc.on('click', '*[data-rowview-confirm]', function(e) {

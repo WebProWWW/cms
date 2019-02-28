@@ -18,9 +18,15 @@ $this->title = 'Авторизация'
     <div class="row justify-content-center">
         <div class="col-12 col-md-8 col-lg-5">
             <div class="wall">
-                <?php $form = Form::begin(['model'=>$model]) ?>
+                <?php $form = Form::begin([
+                    'model'=>$model,
+                    'ajax' => true,
+                    'action' => ['/site/default/login'],
+                    'ajaxOnSuccess' => Form::AJAX_REFRESH,
+                ]) ?>
                     <?= $form->inputTextWithError('email') ?>
                     <?= $form->inputPasswordWithError('password') ?>
+                    <?= $form->error('error') ?>
                     <?= $form->checkbox('remember') ?>
                     <!-- TODO user restore link
                     <div class="mt-15px text-right em-9">

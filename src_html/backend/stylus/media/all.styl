@@ -110,6 +110,7 @@ a
     border-radius 0
     line-height 1
     overflow hidden
+    position relative
     &-default
         resetLn(#ACB3C6, lighten(#ACB3C6, 50%))
         background #4F5979
@@ -158,6 +159,7 @@ a
                 display block
                 height auto
 
+
 .input
     mpd(20px 0 0, 0.8rem 1rem)
     b(1, #1E253C)
@@ -186,6 +188,8 @@ a
         mpd(0.1rem 0 0, 0 0 0 1rem)
         color #D4324E
         font-size 0.9em
+    &.error
+        b(1, #D4324E)
 textarea.input
     height auto
     resize none

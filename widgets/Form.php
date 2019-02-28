@@ -7,12 +7,15 @@
 
 namespace widgets;
 
+use Yii;
+use yii\base\Widget;
 use yii\base\Exception;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-
-use yii\base\Widget;
+use yii\helpers\Url;
+use yii\widgets\ActiveForm;
+use yii\helpers\Json;
 
 /**
  * Class Form
@@ -22,16 +25,57 @@ use yii\base\Widget;
  */
 class Form extends Widget
 {
+
     public $model;
     public $action = null;
     public $method = 'post';
     public $opt = [];
 
+    public $ajax = false;
+    public $ajaxOnSuccess;
+    public $ajaxOnError;
+    public $ajaxOnErrorValidate;
+
+    const AJAX_POPUP_SUCCESS = 'popupSuccess';
+    const AJAX_POPUP_ERROR = 'popupError';
+    const AJAX_ADD_SUCCESS = 'addSuccess';
+    const AJAX_ADD_ERROR = 'addError';
+    const AJAX_REDIRECT = 'redirect';
+    const AJAX_REFRESH = 'refresh';
+    const AJAX_ADD_ERRORS = 'addErrors';
+
     public function init()
     {
         parent::init();
         ob_start();
-        echo Html::beginForm($this->action, $this->method, $this->opt);
+        if ($this->ajax) {
+            if ($this->ajaxOnSuccess === null) $this->ajaxOnSuccess = self::AJAX_POPUP_SUCCESS;
+            if ($this->ajaxOnError === null) $this->ajaxOnError = self::AJAX_POPUP_ERROR;
+            if ($this->ajaxOnErrorValidate === null) $this->ajaxOnErrorValidate = self::AJAX_ADD_ERRORS;
+            echo Html::beginForm(null, $this->method, ArrayHelper::merge([
+                'data-ajax' => Json::encode([
+                    'action' => Url::to($this->action),
+                    'onSuccess' => $this->ajaxOnSuccess,
+                    'onError' => $this->ajaxOnError,
+                    'onErrorValidate' => $this->ajaxOnErrorValidate,
+                ]),
+            ], $this->opt));
+        } else {
+            echo Html::beginForm($this->action, $this->method, $this->opt);
+        }
+    }
+
+    public static function success()
+    {
+        return ['formValidateStatus' => 1];
+    }
+
+    public static function validate($model)
+    {
+        return [
+            'formValidateStatus' => 0,
+            'errors' => ActiveForm::validate($model),
+        ];
     }
 
     /**
@@ -69,6 +113,7 @@ class Form extends Widget
             ], $opt));
         } catch (Exception $exception) {
             return '';
+
         }
     }
 
@@ -155,7 +200,7 @@ class Form extends Widget
     public function submit($content, $opt=[])
     {
         return Html::submitButton($content, ArrayHelper::merge([
-            'class' => 'btn btn-submit'
+            'class' => 'btn btn-submit js-ajax-loading'
         ], $opt));
     }
 

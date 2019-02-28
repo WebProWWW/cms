@@ -45,11 +45,11 @@ class FormLogin extends Model
         ];
     }
 
-    public function validatePassword($attr)
+    public function validatePassword()
     {
         if (!$this->hasErrors()) {
             if (!$this->user or !$this->user->validatePassword($this->password)) {
-                $this->addError($attr, 'Неверный email или пароль');
+                $this->addError('error', 'Неверный email или пароль');
             }
         }
     }
