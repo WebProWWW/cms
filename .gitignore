@@ -39,4 +39,5 @@ phpunit.phar
 /config/mailer.php
 /public_html/index.php
 /public_html/admin-panel/index.php
+/console/migrations/dump.sql
 /README.md

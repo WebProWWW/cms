@@ -218,13 +218,15 @@ class m190204_234833_install extends Migration
         $this->createIndex('idx-product-alias', 'product', 'alias');
         $this->createIndex('idx-product-order', 'product', 'order');
         $this->addForeignKey('fk-product-product_category', 'product', 'category_id', 'product_category', 'id', 'SET NULL', 'RESTRICT');
-        $this->addForeignKey('fk-product-product_image', 'product_image', 'product_id', 'product', 'id', 'SET NULL', 'RESTRICT');
+        $this->addForeignKey('fk-product-product_image', 'product_image', 'product_id', 'product', 'id', 'CASCADE', 'RESTRICT');
+        $this->addForeignKey('fk-product_category-product_image', 'product_image', 'product_id', 'product_category', 'id', 'CASCADE', 'RESTRICT');
 
         /**
          * INSERT DATA
          * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
         $this->insertUser();
         $this->insertDefaultPage();
+        $this->insertData();
     }
 
     /**
@@ -287,6 +289,12 @@ class m190204_234833_install extends Migration
                 time(),
             ],
         ]);
+    }
+
+    private function insertData()
+    {
+        $this->execute(file_get_contents(__DIR__.'/dump.sql'));
+        return 'OK';
     }
 
     private function longText()
