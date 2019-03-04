@@ -2,6 +2,8 @@
 
 namespace modules\catalog\backend;
 
+use Yii;
+
 /**
  * catalog module definition class
  */
@@ -18,7 +20,9 @@ class Module extends \yii\base\Module
     public function init()
     {
         parent::init();
-
-        // custom initialization code goes here
+        Yii::$app->view->params['breadcrumbs'][] = [
+            'url' => ['/site/catalog/default/index'],
+            'label' => 'Каталог',
+        ];
     }
 }

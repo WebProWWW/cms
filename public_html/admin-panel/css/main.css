@@ -539,6 +539,97 @@ a:hover {
   display: block;
   height: auto;
 }
+.imglist {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 10px -10px 0;
+  padding: 0;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+.imglist-add-btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 10px 10px 0;
+  padding: 0;
+  -webkit-transition: 0.16s all ease-in-out;
+  transition: 0.16s all ease-in-out;
+  border: 1px solid #1e253c;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 110px;
+  height: 110px;
+  background: #4f5979;
+  font-size: 30px;
+  color: #8f99b5;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.imglist-add-btn:hover {
+  color: #c7ccda;
+}
+.imglist-item {
+  display: block;
+  margin: 10px 10px 0;
+  padding: 0;
+  position: relative;
+}
+.imglist-remove {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0;
+  padding: 3px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ee4c67;
+  -webkit-box-shadow: 0 0 5px 0 rgba(0,0,0,0.5);
+          box-shadow: 0 0 5px 0 rgba(0,0,0,0.5);
+  font-size: 11px;
+  color: #fff;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.imglist-new-img {
+  display: block;
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+  opacity: 0.43;
+  -webkit-box-shadow: 0 0 5px 0 #000;
+          box-shadow: 0 0 5px 0 #000;
+}
+.imglist-saved-img {
+  display: block;
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+  border: 1px solid #1e253c;
+}
 .input {
   display: block;
   margin: 20px 0 0;

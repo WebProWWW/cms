@@ -3,6 +3,7 @@
     "php": ">=7",
     "yiisoft/yii2": "~2.0.0",
     "yiisoft/yii2-swiftmailer": "~2.1.0",
+    "yiisoft/yii2-imagine": "~2.1.0",
     "twbs/bootstrap": "4.2.1",
     "jquery/jquery": "3.3.1",
     "jquery/jquery-ui": "1.12.1",

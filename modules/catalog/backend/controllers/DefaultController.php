@@ -11,13 +11,6 @@ use yii\web\Controller;
 class DefaultController extends Controller
 {
 
-    public function init()
-    {
-        parent::init();
-        $this->view->params['breadcrumbs'][] = 'Каталог';
-    }
-
-
     public function actionIndex()
     {
         return $this->render('index');

@@ -19,10 +19,6 @@ class CategoryController extends Controller
     {
         parent::init();
         $this->view->params['breadcrumbs'][] = [
-            'url' => ['/site/catalog/default/index'],
-            'label' => 'Каталог',
-        ];
-        $this->view->params['breadcrumbs'][] = [
             'url' => ['/site/catalog/category/index'],
             'label' => 'Категории',
         ];
@@ -56,7 +52,7 @@ class CategoryController extends Controller
     {
         $model = $this->findModel($id);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
         return $this->render('update', ['model' => $model]);
     }
@@ -66,6 +62,14 @@ class CategoryController extends Controller
     {
         $this->findModel($id)->delete();
         return $this->redirect(['index']);
+    }
+
+
+    public function actionDeleteImage($id)
+    {
+        $model = $this->findModel($id);
+        $model->deleteImage();
+        return $this->redirect(['update', 'id' => $id]);
     }
 
 

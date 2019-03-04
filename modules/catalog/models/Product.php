@@ -6,6 +6,8 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\helpers\ArrayHelper;
 use yii\db\ActiveRecord;
+use yii\imagine\Image;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "product".
@@ -24,21 +26,24 @@ use yii\db\ActiveRecord;
  * @property int $updated_at
  *
  * @property ProductCategory $category
+ * @property UploadedFile[] $imageFiles
  * @property ProductImage[] $images
- * @property ProductImage $image
  *
  * @property array $categoryItems
  *
  */
 class Product extends ActiveRecord
 {
+    public $imageFiles = [];
 
     public static function tableName() { return 'product'; }
+
 
     public function behaviors()
     {
         return [ TimestampBehavior::class ];
     }
+
 
     public function rules()
     {
@@ -49,8 +54,10 @@ class Product extends ActiveRecord
             [['content_desc'], 'string'],
             [['alias'], 'unique'],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductCategory::class, 'targetAttribute' => ['category_id' => 'id']],
+            [['imageFiles'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'maxFiles' => 5],
         ];
     }
+
 
     public function attributeLabels()
     {
@@ -59,6 +66,7 @@ class Product extends ActiveRecord
             'order' => 'Сортировка',
             'category_id' => 'Категория',
             'active' => 'Опубликован',
+            'images' => 'Фото',
             'title' => 'Название (title)',
             'alias' => 'Псевдоним (url)',
             'description' => 'Описание страницы (meta description)',
@@ -71,10 +79,45 @@ class Product extends ActiveRecord
         ];
     }
 
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        $path = dirname(Yii::getAlias('@webroot'));
+        foreach (UploadedFile::getInstances($this, 'imageFiles') as $file) {
+            $fileName = Yii::$app->security->generateRandomString(6);
+            $orgUrl = '/img/catalog/' . 'org-' . $fileName . '.' . $file->extension;
+            $mdUrl = '/img/catalog/' . 'md-' . $fileName . '.jpg';
+            $thumbUrl = '/img/catalog/' . 'th-' . $fileName . '.jpg';
+            $file->saveAs($path . $orgUrl);
+            Image::resize($path . $orgUrl, 150, 150)->save($path . $thumbUrl);
+            Image::resize($path . $orgUrl, 600, 600)->save($path . $mdUrl);
+            $productImage = new ProductImage([
+                'org' => $orgUrl,
+                'md' => $mdUrl,
+                'thumb' => $thumbUrl,
+            ]);
+            $productImage->save(false);
+            $productImage->link('product', $this);
+        }
+    }
+
+    public function deleteImage($id)
+    {
+        $path = dirname(Yii::getAlias('@webroot'));
+        $image = ProductImage::findOne(['id' => $id]);
+        unlink($path . $image->org);
+        unlink($path . $image->md);
+        unlink($path . $image->thumb);
+        $image->unlink('product', $this, true);
+    }
+
+
     public function getCategory()
     {
         return $this->hasOne(ProductCategory::class, ['id' => 'category_id']);
     }
+
 
     public function getCategoryItems()
     {

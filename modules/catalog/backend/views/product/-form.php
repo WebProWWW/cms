@@ -6,12 +6,13 @@
  */
 
 use widgets\Form;
+use yii\helpers\Url;
 
 /* @var \modules\catalog\models\Product $model */
 
 ?>
 <div class="container">
-    <?php $form = Form::begin(['model'=>$model]) ?>
+    <?php $form = Form::begin(['model' => $model, 'opt' => ['enctype' => 'multipart/form-data']]) ?>
         <div class="row">
             <div class="col-auto ml-auto">
                 <?= $form->submit('Сохранить') ?>
@@ -23,6 +24,27 @@ use widgets\Form;
                     <?= $form->checkbox('active') ?>
                 </div>
             </div>
+            <?= $form->label('images') ?>
+            <div class="imglist js-form-images">
+                <?php foreach ($model->images as $image): ?>
+                    <div class="imglist-item">
+                        <a href="<?= Url::to([
+                            '/site/catalog/product/delete-image',
+                            'imgId' => $image->id,
+                            'prodId' => $model->id,
+                        ]) ?>">
+                            <span class="imglist-remove">
+                                <i class="fas fa-times fa-fw"></i>
+                            </span>
+                        </a>
+                        <img class="imglist-saved-img" width="110" height="110" src="<?= $image->thumb ?>" alt="">
+                    </div>
+                <?php endforeach; ?>
+                <div class="imglist-add-btn js-form-image-add" data-input-name="<?= $form->getInputName('imageFiles') ?>[]">
+                    <i class="fas fa-plus"></i>
+                </div>
+            </div>
+            <?php //= $form->inputImageWithPreview('images') ?>
             <?= $form->dropdownWithLabelError('category_id', $model->categoryItems) ?>
             <?= $form->inputTextWithLabelError('title', ['input'=>[
                 'data-page-cyrlat' => $form->getInputId('alias'),

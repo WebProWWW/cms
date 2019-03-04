@@ -160,6 +160,55 @@ a
                 height auto
 
 
+.imglist
+    mpd(10px -10px 0, 0, flex)
+    flex-wrap wrap
+    &-add-btn
+        mpd(10px 10px 0, 0, flex)
+        trans()
+        b(1, #1E253C)
+        box-sizing border-box
+        align-items center
+        justify-content center
+        width 110px
+        height @width
+        background #4F5979
+        font-size 30px
+        color #8F99B5
+        cursor pointer
+        user-select none
+        &:hover
+            color lighten(#8F99B5, 50%)
+    &-item
+        mpd(10px 10px 0, 0)
+        position relative
+    &-remove
+        mpd(0, 3px, flex)
+        align-items center
+        justify-content center
+        position absolute
+        top -5px
+        right @top
+        width 20px
+        height @width
+        border-radius 50%
+        background #EE4C67
+        box-shadow 0 0 5px 0 alpha(black, 50%)
+        font-size 11px
+        color white
+        cursor pointer
+        user-select none
+    &-new-img
+        mpd()
+        max-width 100%
+        opacity 0.43
+        box-shadow 0 0 5px 0 black
+    &-saved-img
+        mpd()
+        max-width 100%
+        b(1, #1E253C)
+
+
 .input
     mpd(20px 0 0, 0.8rem 1rem)
     b(1, #1E253C)

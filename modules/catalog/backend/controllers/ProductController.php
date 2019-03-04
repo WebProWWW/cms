@@ -2,6 +2,7 @@
 
 namespace modules\catalog\backend\controllers;
 
+use modules\catalog\models\ProductImage;
 use Yii;
 use modules\catalog\models\Product;
 use yii\data\ActiveDataProvider;
@@ -19,10 +20,6 @@ class ProductController extends Controller
     {
         parent::init();
         $this->view->params['breadcrumbs'][] = [
-            'url' => ['/site/catalog/default/index'],
-            'label' => 'Каталог',
-        ];
-        $this->view->params['breadcrumbs'][] = [
             'url' => ['/site/catalog/product/index'],
             'label' => 'Товары',
         ];
@@ -36,14 +33,6 @@ class ProductController extends Controller
         ]);
         return $this->render('index', [
             'dataProvider' => $dataProvider,
-        ]);
-    }
-
-
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
         ]);
     }
 
@@ -76,6 +65,13 @@ class ProductController extends Controller
     {
         $this->findModel($id)->delete();
         return $this->redirect(['index']);
+    }
+
+    public function actionDeleteImage($imgId, $prodId)
+    {
+        $model = $this->findModel($prodId);
+        $model->deleteImage($imgId);
+        return $this->redirect(['update', 'id' => $prodId]);
     }
 
 

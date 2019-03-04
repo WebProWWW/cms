@@ -176,7 +176,10 @@ class m190204_234833_install extends Migration
         $this->createTable('product_image', [
             'id' => $this->primaryKey(),
             'product_id' => $this->integer()->null(),
-            'src' => $this->string()->notNull(),
+            'order' => $this->integer()->defaultValue(0)->notNull(),
+            'org' => $this->string()->notNull(),
+            'md' => $this->string()->notNull(),
+            'thumb' => $this->string()->notNull(),
         ]);
         $this->createIndex('idx-product_image-product_id', 'product_image', 'product_id');
     /**
@@ -219,7 +222,6 @@ class m190204_234833_install extends Migration
         $this->createIndex('idx-product-order', 'product', 'order');
         $this->addForeignKey('fk-product-product_category', 'product', 'category_id', 'product_category', 'id', 'SET NULL', 'RESTRICT');
         $this->addForeignKey('fk-product-product_image', 'product_image', 'product_id', 'product', 'id', 'CASCADE', 'RESTRICT');
-        $this->addForeignKey('fk-product_category-product_image', 'product_image', 'product_id', 'product_category', 'id', 'CASCADE', 'RESTRICT');
 
         /**
          * INSERT DATA

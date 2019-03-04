@@ -5,6 +5,8 @@ namespace modules\catalog\models;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\imagine\Image;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "product_category".
@@ -24,6 +26,7 @@ use yii\db\ActiveRecord;
  */
 class ProductCategory extends ActiveRecord
 {
+    public $imageFile;
 
     public static function tableName() { return 'product_category'; }
 
@@ -41,6 +44,7 @@ class ProductCategory extends ActiveRecord
             [['title', 'alias', 'content_title'], 'required'],
             [['title', 'alias', 'description', 'keywords', 'content_img', 'content_title', 'content_desc'], 'string', 'max' => 255],
             [['alias'], 'unique'],
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
         ];
     }
 
@@ -63,6 +67,31 @@ class ProductCategory extends ActiveRecord
             'updated_at' => 'Обновлен',
         ];
     }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            if ($file = UploadedFile::getInstance($this, 'imageFile')) {
+                $path = dirname(Yii::getAlias('@webroot'));
+                $fileName = Yii::$app->security->generateRandomString(6);
+                $imgUrl = '/img/catalog/' . $fileName . '.jpg';
+                $file->saveAs($path . $imgUrl);
+                Image::resize($path . $imgUrl, 600, 600)->save($path . $imgUrl);
+                $this->content_img = $imgUrl;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public function deleteImage()
+    {
+        $path = dirname(Yii::getAlias('@webroot'));
+        unlink($path . $this->content_img);
+        $this->content_img = null;
+        $this->save(false);
+    }
+
 
     /**
      * @return \yii\db\ActiveQuery

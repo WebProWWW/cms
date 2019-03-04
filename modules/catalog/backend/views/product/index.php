@@ -8,7 +8,6 @@ use yii\helpers\Html;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Каталог';
-$this->params['breadcrumbs'][] = 'Список';
 ?>
 <div class="container">
 

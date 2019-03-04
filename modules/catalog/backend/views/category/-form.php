@@ -6,19 +6,38 @@
  */
 
 use widgets\Form;
+use yii\helpers\Url;
 
-/* @var \modules\catalog\models\Product $model */
+/* @var \modules\catalog\models\ProductCategory $model */
 
 ?>
 <div class="container">
-    <?php $form = Form::begin(['model'=>$model]) ?>
+    <?php $form = Form::begin(['model'=>$model, 'opt' => ['enctype' => 'multipart/form-data']]) ?>
         <div class="row">
             <div class="col-auto ml-auto">
                 <?= $form->submit('Сохранить') ?>
             </div>
         </div>
         <div class="wall">
-            <?= $form->inputTextWithLabelError('content_img') ?>
+            <?= $form->label('content_img') ?>
+            <div class="imglist js-form-images">
+                <?php if ($model->content_img): ?>
+                    <div class="imglist-item">
+                        <a href="<?= Url::to([
+                            '/site/catalog/category/delete-image',
+                            'id' => $model->id,
+                        ]) ?>">
+                                <span class="imglist-remove">
+                                    <i class="fas fa-times fa-fw"></i>
+                                </span>
+                        </a>
+                        <img class="imglist-saved-img" width="110" height="110" src="<?= $model->content_img ?>" alt="">
+                    </div>
+                <?php endif; ?>
+                <div class="imglist-add-btn js-form-image-add" data-single-file data-input-name="<?= $form->getInputName('imageFile') ?>">
+                    <i class="fas fa-plus"></i>
+                </div>
+            </div>
             <?= $form->inputTextWithLabelError('title', ['input'=>[
                 'data-page-cyrlat' => $form->getInputId('alias'),
             ]]) ?>

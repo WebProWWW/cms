@@ -4,7 +4,8 @@
  */
 
 "use strict";
-var Loader;
+var Loader,
+  boundMethodCheck = function(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new Error('Bound instance method accessed before binding'); } };
 
 Loader = (function() {
   class Loader {
@@ -154,7 +155,7 @@ Loader = (function() {
 (function() {
   /* Widgets */
   /* Widget Form */
-  var $doc, loader;
+  var $doc, ListItem, loader;
   $doc = $(document);
   loader = new Loader;
   $doc.on('focusin', '.input', function(e) {
@@ -193,6 +194,48 @@ Loader = (function() {
       }
     };
     loader.postJson(options.action, $(this).serialize());
+    return false;
+  });
+  ListItem = class ListItem extends FileReader {
+    constructor(input, $parent1, single) {
+      super();
+      this.addItem = this.addItem.bind(this);
+      this.input = input;
+      this.$parent = $parent1;
+      this.single = single;
+      if ((this.input.files != null) && this.input.files.length) {
+        this.onload = this.addItem;
+        this.readAsDataURL(this.input.files[0]);
+      }
+    }
+
+    addItem(e) {
+      var $item, $removeBtn;
+      boundMethodCheck(this, ListItem);
+      $removeBtn = $('<span class="imglist-remove">\n    <i class="fas fa-times fa-fw"></i>\n</span>');
+      $item = $(`<div class="imglist-item">\n    <img class="imglist-new-img" width="110" height="110" src="${e.target.result}">\n</div>`);
+      $removeBtn.on('click', function(e) {
+        return $(this).closest('.imglist-item').remove();
+      });
+      $item.append([$removeBtn, $(this.input)]);
+      if (this.single) {
+        this.$parent.find('.imglist-item').remove();
+      }
+      return this.$parent.prepend($item);
+    }
+
+  };
+  $doc.on('click', '.js-form-image-add', function(e) {
+    var $fileInput, $parent, $this, singleItem;
+    e.preventDefault();
+    $this = $(this);
+    $parent = $this.closest('.js-form-images');
+    $fileInput = $(`<input class="d-none" type="file" accept="image/*" name="${$this.attr('data-input-name')}">`);
+    singleItem = $this.attr('data-single-file') != null;
+    $fileInput.one('change', function(e) {
+      return new ListItem(this, $parent, singleItem);
+    });
+    $fileInput.trigger('click');
     return false;
   });
   /* Widget RowView */

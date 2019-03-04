@@ -28,10 +28,10 @@ class Backend extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/main.css?v=005',
+        'css/main.css?v=006',
     ];
     public $js = [
-        'js/main.js?v=005',
+        'js/main.js?v=006',
     ];
     public $depends = [
         TwbsGrid::class,
