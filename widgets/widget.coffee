@@ -33,13 +33,13 @@ $doc.on 'submit', 'form[data-ajax]', (e) ->
 
 
 
-class ListItem extends FileReader
+class ListItem
 
     constructor: (@input, @$parent, @single) ->
-        super()
         if @input.files? and @input.files.length
-            @onload = @addItem
-            @readAsDataURL @input.files[0]
+            reader = new FileReader
+            reader.onload = @addItem
+            reader.readAsDataURL @input.files[0]
 
     addItem: (e) =>
         $removeBtn = $ '''

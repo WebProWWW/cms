@@ -4,8 +4,7 @@
  */
 
 "use strict";
-var Loader,
-  boundMethodCheck = function(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new Error('Bound instance method accessed before binding'); } };
+var Loader;
 
 Loader = (function() {
   class Loader {
@@ -196,22 +195,22 @@ Loader = (function() {
     loader.postJson(options.action, $(this).serialize());
     return false;
   });
-  ListItem = class ListItem extends FileReader {
+  ListItem = class ListItem {
     constructor(input, $parent1, single) {
-      super();
+      var reader;
       this.addItem = this.addItem.bind(this);
       this.input = input;
       this.$parent = $parent1;
       this.single = single;
       if ((this.input.files != null) && this.input.files.length) {
-        this.onload = this.addItem;
-        this.readAsDataURL(this.input.files[0]);
+        reader = new FileReader;
+        reader.onload = this.addItem;
+        reader.readAsDataURL(this.input.files[0]);
       }
     }
 
     addItem(e) {
       var $item, $removeBtn;
-      boundMethodCheck(this, ListItem);
       $removeBtn = $('<span class="imglist-remove">\n    <i class="fas fa-times fa-fw"></i>\n</span>');
       $item = $(`<div class="imglist-item">\n    <img class="imglist-new-img" width="110" height="110" src="${e.target.result}">\n</div>`);
       $removeBtn.on('click', function(e) {
