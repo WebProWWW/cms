@@ -1,13 +1,12 @@
 <?php
 
 use widgets\RowView;
-
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Каталог';
+$this->title = 'Блог';
 
 ?>
 <div class="container">
@@ -29,6 +28,6 @@ $this->title = 'Каталог';
             ],
         ],
         'actions' => ['update', 'delete'],
-        'sortable' => ['url' => ['/site/catalog/category/sort']],
+        'sortable' => ['url' => ['/site/blog/category/sort']],
     ]) ?>
 </div>

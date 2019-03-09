@@ -9,14 +9,10 @@ use Yii;
  */
 class Module extends \yii\base\Module
 {
-    /**
-     * {@inheritdoc}
-     */
+
     public $controllerNamespace = 'modules\catalog\backend\controllers';
 
-    /**
-     * {@inheritdoc}
-     */
+
     public function init()
     {
         parent::init();

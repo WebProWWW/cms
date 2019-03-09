@@ -44,7 +44,10 @@ class RowView extends Widget
         if ($this->dataProvider === null) {
             return '';
         }
-        return $this->renderContent();
+        return ''
+            .$this->renderContent()
+            .Pagination::widget(['dataProvider' => $this->dataProvider])
+        .'';
     }
 
     /**

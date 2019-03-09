@@ -1,21 +1,22 @@
 <?php
 
 use widgets\RowView;
+use yii\helpers\Url;
 
-use yii\helpers\Html;
+/* @var \yii\web\View $this */
+/* @var \yii\data\ActiveDataProvider $dataProvider */
 
-/* @var $this yii\web\View */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-
-$this->title = 'Каталог';
+$this->title = 'Блог';
 
 ?>
 <div class="container">
-    <div class="row justify-content-end">
-        <div class="col-auto">
-            <?= Html::a('Создать категорию', ['create'], ['class' => 'btn btn-green']) ?>
+
+    <div class="row">
+        <div class="col-auto ml-auto">
+            <a class="btn btn-green" href="<?= Url::to(['create']) ?>">Создать пост</a>
         </div>
     </div>
+
     <?= RowView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
@@ -29,6 +30,7 @@ $this->title = 'Каталог';
             ],
         ],
         'actions' => ['update', 'delete'],
-        'sortable' => ['url' => ['/site/catalog/category/sort']],
+        'sortable' => ['url' => ['/site/blog/post/sort']],
     ]) ?>
+
 </div>

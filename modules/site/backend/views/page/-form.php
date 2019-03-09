@@ -128,7 +128,7 @@ use widgets\RowView;
             <div class="tab-content-item" id="site-page-content-blog">
                 <div class="wall">
                     <p class="text label">Блог (модуль)</p>
-                    <p class="text mt-5px">Вывод списка постов блога на странице</p>
+                    <p class="text mt-5px">Вывод списка категорий блога</p>
                 </div>
             </div>
         </div>

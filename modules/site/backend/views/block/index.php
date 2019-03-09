@@ -44,4 +44,5 @@ $this->params['breadcrumbs'][] = 'Список';
             ],
         ],
     ]) ?>
+
 </div>

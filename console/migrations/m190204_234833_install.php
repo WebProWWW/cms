@@ -26,6 +26,7 @@ class m190204_234833_install extends Migration
             'block_slider_slide',
 
             'post',
+            'post_category',
 
             'product',
             'product_image',
@@ -142,14 +143,17 @@ class m190204_234833_install extends Migration
         $this->createIndex('idx-block_slider_slide-slider_id', 'block_slider_slide', 'slider_id');
         $this->addForeignKey('fk-block_slider_slide-block_slider', 'block_slider_slide', 'slider_id', 'block_slider', 'id', 'CASCADE', 'RESTRICT');
 
-        /**
-         * BLOG
-         * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+/**
+ * BLOG
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
     /**
      * POST
      */
         $this->createTable('post', [
             'id' => $this->primaryKey(),
+            'category_id' => $this->integer()->null(),
             'active' => $this->integer(1)->defaultValue(1),
             'order' => $this->integer()->defaultValue(0),
             'title' => $this->string()->notNull(),
@@ -166,6 +170,27 @@ class m190204_234833_install extends Migration
         $this->createIndex('idx-post-active', 'post', 'active');
         $this->createIndex('idx-post-order', 'post', 'order');
         $this->createIndex('idx-post-alias', 'post', 'alias');
+
+    /**
+     * POST_CATEGORY
+     */
+        $this->createTable('post_category', [
+            'id' => $this->primaryKey(),
+            'order' => $this->integer()->defaultValue(0),
+            'title' => $this->string()->notNull(),
+            'alias' => $this->string()->notNull()->unique(),
+            'description' => $this->string()->null(),
+            'keywords' => $this->string()->null(),
+            'content_img' => $this->string()->null(),
+            'content_title' => $this->string()->notNull(),
+            'content_desc' => $this->longText()->notNull(),
+            'created_at' => $this->integer()->notNull(),
+            'updated_at' => $this->integer()->notNull(),
+        ]);
+        $this->createIndex('idx-post_category-alias', 'post_category', 'alias');
+        $this->createIndex('idx-post_category-order', 'post_category', 'order');
+        $this->addForeignKey('fk-post-post_category', 'post', 'category_id', 'post_category', 'id', 'SET NULL', 'RESTRICT');
+
 
         /**
          * CATALOG

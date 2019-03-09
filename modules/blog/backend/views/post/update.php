@@ -8,6 +8,6 @@
 /* @var \yii\web\View $this */
 
 $this->title = 'Блог';
-$this->params['breadcrumbs'][] = 'Редактировать пост';
+$this->params['breadcrumbs'][] = 'Редактировать';
 ?>
-<?= $this->render('-form', ['model'=>$model]) ?>
+<?= $this->render('-form', ['model' => $model]) ?>

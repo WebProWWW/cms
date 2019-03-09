@@ -36,13 +36,9 @@ class Product extends ActiveRecord
 {
     public $imageFiles = [];
 
+
     public static function tableName() { return 'product'; }
-
-
-    public function behaviors()
-    {
-        return [ TimestampBehavior::class ];
-    }
+    public function behaviors() { return [ TimestampBehavior::class ]; }
 
 
     public function rules()
@@ -106,9 +102,11 @@ class Product extends ActiveRecord
     {
         $path = dirname(Yii::getAlias('@webroot'));
         $image = ProductImage::findOne(['id' => $id]);
-        unlink($path . $image->org);
-        unlink($path . $image->md);
-        unlink($path . $image->thumb);
+        $this->deleteImageFiles([
+            $path . $image->org,
+            $path . $image->md,
+            $path . $image->thumb,
+        ]);
         $image->unlink('product', $this, true);
     }
 
@@ -139,6 +137,18 @@ class Product extends ActiveRecord
     public function getImage()
     {
         return $this->hasOne(ProductImage::class, ['product_id' => 'id']);
+    }
+
+    /**
+     * @param array $files
+     */
+    private function deleteImageFiles($files=[])
+    {
+        foreach ($files as $file) {
+            if (file_exists($file)) {
+                unlink($file);
+            }
+        }
     }
 
 }

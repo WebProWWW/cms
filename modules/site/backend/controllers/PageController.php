@@ -51,6 +51,7 @@ class PageController extends Controller
         }
         $blockDataProvider = new ActiveDataProvider([
             'query' => Block::find(),
+//            'pagination' => ['pageSize' => 3],
         ]);
         if ($model->action === null) {
             $model->action = '/site/default/index';

@@ -2,7 +2,7 @@
 
 namespace modules\blog\backend\controllers;
 
-use modules\blog\models\Post;
+use modules\blog\models\PostCategory;
 
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -10,10 +10,10 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
- * Class PostController
+ * Class CategoryController
  * @package modules\blog\backend\controllers
  */
-class PostController extends Controller
+class CategoryController extends Controller
 {
 
     public function init()
@@ -21,21 +21,27 @@ class PostController extends Controller
         parent::init();
         $this->view->params['breadcrumbs'][] = [
             'url' => ['index'],
-            'label' => 'Посты',
+            'label' => 'Категории',
         ];
     }
 
 
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider(['query' => Post::find()]);
+        $dataProvider = new ActiveDataProvider(['query' => PostCategory::find()]);
         return $this->render('index', ['dataProvider' => $dataProvider]);
+    }
+
+
+    public function actionView($id)
+    {
+        return $this->render('view', ['model' => $this->findModel($id)]);
     }
 
 
     public function actionCreate()
     {
-        $model = new Post();
+        $model = new PostCategory();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         }
@@ -69,13 +75,14 @@ class PostController extends Controller
 
     /**
      * @param $id
-     * @return Post|null
+     * @return PostCategory|null
      * @throws NotFoundHttpException
      */
     protected function findModel($id)
     {
-        if (($model = Post::findOne($id)) !== null) { return $model; }
+        if (($model = PostCategory::findOne($id)) !== null) {
+            return $model;
+        }
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-
 }

@@ -358,6 +358,27 @@ textarea.input
         height 1px
 
 
+.pagination
+    mpd(20px -1px 0 0, 0, flex)
+    align-items stretch
+    &-item
+        mpd(0 1px 0 0)
+        trans()
+        background #384162
+        &:hover, &.active
+            background lighten(#384162, 13%)
+            .pagination-link
+                color white
+        &.disabled
+            display none
+    &-link
+        mpd(0 1px 0 0, 0.5rem 1rem, flex)
+        resetLn(#8F99B5, white)
+        height 100%
+        justify-content center
+        align-items center
+
+
 .detail-view
     &-row
         margin-top 1px

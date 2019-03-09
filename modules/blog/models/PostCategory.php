@@ -1,15 +1,15 @@
 <?php
 
-namespace modules\catalog\models;
+namespace modules\blog\models;
 
 use Yii;
-use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\behaviors\TimestampBehavior;
 use yii\imagine\Image;
 use yii\web\UploadedFile;
 
 /**
- * This is the model class for table "product_category".
+ * This is the model class for table "post_category".
  *
  * @property int $id
  * @property int $order
@@ -19,38 +19,34 @@ use yii\web\UploadedFile;
  * @property string $keywords
  * @property string $content_img
  * @property string $content_title
+ * @property string $content_desc
  * @property int $created_at
  * @property int $updated_at
  *
- * @property Product[] $products
+ * @property Post[] $posts
  */
-class ProductCategory extends ActiveRecord
+class PostCategory extends ActiveRecord
 {
+
     public $imageFile;
 
-    public static function tableName() { return 'product_category'; }
-
-
-    public function behaviors()
-    {
-        return [ TimestampBehavior::class ];
-    }
+    public static function tableName() { return 'post_category'; }
+    public function behaviors() { return [ TimestampBehavior::class ]; }
 
 
     public function rules()
     {
         return [
             [['order', 'created_at', 'updated_at'], 'integer'],
-            [['title', 'alias', 'content_title'], 'required'],
-            [['title', 'alias', 'description', 'keywords', 'content_img', 'content_title', 'content_desc'], 'string', 'max' => 255],
+            [['title', 'alias', 'content_title', 'content_desc'], 'required'],
+            [['content_desc'], 'string'],
+            [['title', 'alias', 'description', 'keywords', 'content_img', 'content_title'], 'string', 'max' => 255],
             [['alias'], 'unique'],
             [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
+
     public function attributeLabels()
     {
         return [
@@ -68,18 +64,20 @@ class ProductCategory extends ActiveRecord
         ];
     }
 
+
     public function beforeSave($insert)
     {
         if ($file = UploadedFile::getInstance($this, 'imageFile')) {
             $path = dirname(Yii::getAlias('@webroot'));
             $fileName = Yii::$app->security->generateRandomString(6);
-            $imgUrl = '/img/catalog/' . $fileName . '.jpg';
+            $imgUrl = '/img/blog/' . $fileName . '.jpg';
             $file->saveAs($path . $imgUrl);
-            Image::resize($path . $imgUrl, 600, 600)->save($path . $imgUrl);
+            Image::crop($path . $imgUrl, 600, 600)->save($path . $imgUrl);
             $this->content_img = $imgUrl;
         }
         return parent::beforeSave($insert);
     }
+
 
     public function deleteImage()
     {
@@ -91,12 +89,12 @@ class ProductCategory extends ActiveRecord
         $this->save(false);
     }
 
-
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProducts()
+    public function getPosts()
     {
-        return $this->hasMany(Product::class, ['category_id' => 'id']);
+        return $this->hasMany(Post::class, ['category_id' => 'id']);
     }
+
 }
