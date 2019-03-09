@@ -5,6 +5,7 @@ namespace modules\blog\models;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\imagine\Image;
 use yii\web\UploadedFile;
@@ -28,6 +29,7 @@ use yii\web\UploadedFile;
  * @property int $updated_at
  *
  * @property PostCategory $category
+ * @property array $categoryItems
  */
 class Post extends ActiveRecord
 {
@@ -61,6 +63,7 @@ class Post extends ActiveRecord
             'alias' => 'Псевдоним (url)',
             'description' => 'Описание страницы (meta description)',
             'keywords' => 'Ключевые слова (meta keywords)',
+            'category_id' => 'Категория',
             'content_img' => 'Изображение',
             'content_title' => 'Заголовок (h1)',
             'content_desc' => 'Краткое опсание',
@@ -101,6 +104,13 @@ class Post extends ActiveRecord
         }
         $this->content_img = null;
         $this->save(false);
+    }
+
+
+    public function getCategoryItems()
+    {
+        $categories =  PostCategory::find()->all();
+        return ArrayHelper::map($categories, 'id','title');
     }
 
     /**

@@ -47,6 +47,7 @@ use yii\helpers\Url;
                 </div>
             </div>
             <?= $form->error('imageFile') ?>
+            <?= $form->dropdownWithLabelError('category_id', $model->categoryItems) ?>
             <?= $form->inputTextWithLabelError('title', ['input'=>[
                 'data-page-cyrlat' => $form->getInputId('alias'),
             ]]) ?>
