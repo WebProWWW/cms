@@ -2,6 +2,8 @@
 
 namespace modules\catalog\models;
 
+use Imagine\Image\Box;
+use Imagine\Image\Point;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\helpers\ArrayHelper;
@@ -86,8 +88,12 @@ class Product extends ActiveRecord
             $mdUrl = '/img/catalog/' . 'md-' . $fileName . '.jpg';
             $thumbUrl = '/img/catalog/' . 'th-' . $fileName . '.jpg';
             $file->saveAs($path . $orgUrl);
-            Image::resize($path . $orgUrl, 150, 150)->save($path . $thumbUrl);
-            Image::resize($path . $orgUrl, 600, 600)->save($path . $mdUrl);
+            Image::resize($path . $orgUrl, null, 150, false, true)
+                ->crop(new Point(0, 0), new Box(150, 150))
+                ->save($path . $thumbUrl);
+            Image::resize($path . $orgUrl, null, 600, false, true)
+                ->crop(new Point(0, 0), new Box(600, 600))
+                ->save($path . $mdUrl);
             $productImage = new ProductImage([
                 'org' => $orgUrl,
                 'md' => $mdUrl,

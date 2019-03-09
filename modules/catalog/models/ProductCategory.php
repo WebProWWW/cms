@@ -2,6 +2,8 @@
 
 namespace modules\catalog\models;
 
+use Imagine\Image\Box;
+use Imagine\Image\Point;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -75,7 +77,9 @@ class ProductCategory extends ActiveRecord
             $fileName = Yii::$app->security->generateRandomString(6);
             $imgUrl = '/img/catalog/' . $fileName . '.jpg';
             $file->saveAs($path . $imgUrl);
-            Image::resize($path . $imgUrl, 600, 600)->save($path . $imgUrl);
+            Image::resize($path . $imgUrl, null, 600, false, true)
+                ->crop(new Point(0, 0), new Box(600, 600))
+                ->save($path . $imgUrl);
             $this->content_img = $imgUrl;
         }
         return parent::beforeSave($insert);

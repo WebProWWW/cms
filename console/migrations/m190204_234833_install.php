@@ -160,6 +160,7 @@ class m190204_234833_install extends Migration
             'alias' => $this->string()->notNull()->unique(),
             'description' => $this->string()->null(),
             'keywords' => $this->string()->null(),
+            'content_th_img' => $this->string()->null(),
             'content_img' => $this->string()->null(),
             'content_title' => $this->string()->notNull(),
             'content_desc' => $this->string()->notNull(),

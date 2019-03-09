@@ -2,6 +2,8 @@
 
 namespace modules\blog\models;
 
+use Imagine\Image\Box;
+use Imagine\Image\Point;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
@@ -22,6 +24,7 @@ use yii\web\UploadedFile;
  * @property string $description
  * @property string $keywords
  * @property string $content_img
+ * @property string $content_th_img
  * @property string $content_title
  * @property string $content_desc
  * @property string $content
@@ -80,9 +83,17 @@ class Post extends ActiveRecord
             $path = dirname(Yii::getAlias('@webroot'));
             $fileName = Yii::$app->security->generateRandomString(6);
             $imgUrl = '/img/blog/' . $fileName . '.jpg';
-            $file->saveAs($path . $imgUrl);
-            Image::crop($path . $imgUrl, 600, 600)->save($path . $imgUrl);
+            $imgThumb = '/img/blog/th-' . $fileName . '.jpg';
+            $orgFile = $path . $imgUrl;
+            $file->saveAs($orgFile);
+            Image::resize($orgFile, null, 600, false, true)
+                ->crop(new Point(0, 0), new Box(600, 600))
+                ->save($path . $imgThumb);
+            Image::resize($orgFile, 1200, null, false, true)
+                ->crop(new Point(0, 0), new Box(1200, 300))
+                ->save($orgFile);
             $this->content_img = $imgUrl;
+            $this->content_th_img = $imgThumb;
         }
         $this->content = Html::encode($this->content);
         return parent::beforeSave($insert);
@@ -99,10 +110,12 @@ class Post extends ActiveRecord
     public function deleteImage()
     {
         $path = dirname(Yii::getAlias('@webroot'));
-        if (file_exists($path . $this->content_img)) {
-            unlink($path . $this->content_img);
-        }
+        $this->deleteImageFiles([
+            $path . $this->content_img,
+            $path . $this->content_th_img,
+        ]);
         $this->content_img = null;
+        $this->content_th_img = null;
         $this->save(false);
     }
 
@@ -119,5 +132,14 @@ class Post extends ActiveRecord
     public function getCategory()
     {
         return $this->hasOne(PostCategory::class, ['id' => 'category_id']);
+    }
+
+    private function deleteImageFiles($files=[])
+    {
+        foreach ($files as $file) {
+            if (file_exists($file)) {
+                unlink($file);
+            }
+        }
     }
 }

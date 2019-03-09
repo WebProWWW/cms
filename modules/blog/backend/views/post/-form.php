@@ -39,7 +39,7 @@ use yii\helpers\Url;
                                     <i class="fas fa-times fa-fw"></i>
                                 </span>
                         </a>
-                        <img class="imglist-saved-img" width="110" height="110" src="<?= $model->content_img ?>" alt="">
+                        <img class="imglist-saved-img" width="110" height="110" src="<?= $model->content_th_img ?>" alt="">
                     </div>
                 <?php endif; ?>
                 <div class="imglist-add-btn js-form-image-add" data-single-file data-input-name="<?= $form->getInputName('imageFile') ?>">
