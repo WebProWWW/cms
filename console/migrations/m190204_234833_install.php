@@ -254,7 +254,7 @@ class m190204_234833_install extends Migration
          * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
         $this->insertUser();
         $this->insertDefaultPage();
-        $this->insertData();
+        //$this->insertData();
     }
 
     /**
@@ -308,9 +308,9 @@ class m190204_234833_install extends Migration
         $this->batchInsert('user',['username','email','status','role','auth_key','password_hash','created_at','updated_at'],[
             [
                 'Админ',
-                'admin@site.com',
-                \components\user\Access::STATUS_ACTIVE,
-                \components\user\Access::ROLE_ADMIN,
+                'v.timur8484@gmail.com',
+                components\user\Access::STATUS_ACTIVE,
+                components\user\Access::ROLE_ADMIN,
                 Yii::$app->security->generateRandomString(32),
                 Yii::$app->security->generatePasswordHash('123456'),
                 time(),
