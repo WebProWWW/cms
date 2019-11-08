@@ -10,11 +10,11 @@ return [
     'version'  => '2.0',
     'modules'  => [
         'site'   => [
-            'class'    => \modules\site\backend\Module::class,
+            'class'    => modules\site\backend\Module::class,
             'modules'  => [
-                'catalog'  => ['class' => \modules\catalog\backend\Module::class],
-                'blog'     => ['class' => \modules\blog\backend\Module::class],
-                'user'     => [ 'class' => \modules\user\backend\Module::class ],
+                'catalog'  => ['class' => modules\catalog\backend\Module::class],
+                'blog'     => ['class' => modules\blog\backend\Module::class],
+                'user'     => [ 'class' => modules\user\backend\Module::class ],
             ],
         ],
     ],
@@ -26,7 +26,7 @@ return [
             'suffix'               => '.html',
             'rules' => [
                 [
-                    'class' =>  \yii\web\GroupUrlRule::class,
+                    'class' =>  yii\web\GroupUrlRule::class,
                     'routePrefix' => 'site',
                     'rules' => [
                         '<action:[\w\-]+>' => 'default/<action>',

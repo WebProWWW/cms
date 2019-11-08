@@ -1,0 +1,474 @@
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+radius = 0
+
+
+trans(t=160)
+    transAll(t)
+
+
+shadow()
+    box-shadow 0 5px 10px 0 alpha(black, 13%)
+
+
+html
+    height 100%
+    font-size 13px
+
+
+body
+    height 100%
+    background #1E253C
+    font-weight 300
+    color white
+
+
+a
+    trans()
+    resetLn(#07A9D9, #34C3F3)
+    user-select none
+    cursor pointer
+
+
+.wrapper
+    mpd(0, 30px 0 1px, flex)
+    flex-direction column
+    min-height 100%
+
+
+.header
+    mpd(0, 0)
+    shadow()
+    position fixed
+    top 0px
+    left 0px
+    right 0px
+    background #384162
+    z-index 10
+    &-ln
+        mpd(0, 5px 0, flex)
+        resetLn(#8F99B5, lighten(#8F99B5, 50%))
+        align-items center
+
+
+.footer
+    mpd(auto 0 0)
+
+
+.dropdown
+    position relative
+    &-content
+        mpd()
+        trans()
+        position absolute
+        top 100%
+        right 0px
+        background #384162
+        box-shadow 0 7px 7px 0 alpha(black, 30%)
+        opacity 0
+        visibility hidden
+    &:hover > .dropdown-content
+        opacity 1
+        visibility visible
+    &-ln
+        mpd(0, 0.5rem 1rem, flex)
+        resetLn(#8F99B5, lighten(#8F99B5, 50%))
+        line-height 1
+
+
+.nav
+    margin-top 20px
+    margin-right -1px
+    &-ln
+        mpd(0 1px 0 0, 20px 15px, flex)
+        resetLn(#8F99B5, lighten(#8F99B5, 50%))
+        flex-direction column
+        background #384162
+        flex-grow 1
+        height 100%
+        &:hover
+            background lighten(#384162, 6%)
+    &-icon
+        mpd(0 0 3px)
+        text-align center
+        font-size 50px
+    &-text
+        mpd(auto 0)
+        text-align center
+
+
+.wall
+    mpd(0 0 15px, 20px 20px 1px)
+    shadow()
+    background #384162
+    border-radius radius
+    overflow hidden
+
+
+.divider
+    mpd(0 0 15px)
+    height 1px
+    background #384162
+
+
+.btn
+    mpd(0 0 15px, 1rem)
+    resetBtn()
+    trans()
+    border-radius radius
+    line-height 1
+    overflow hidden
+    position relative
+    &-default
+        resetLn(#ACB3C6, lighten(#ACB3C6, 50%))
+        background #4F5979
+    &-green, &-submit
+        resetLn(white, white)
+        background #00A8AA
+        &:hover
+            background darken(#00A8AA, 13%)
+
+
+.breadcrumb
+    mpd(20px 0 0, 0, flex)
+    flex-wrap wrap
+    &-ln
+        mpd(0, 0, flex)
+        resetLn(#8F99B5, lighten(#8F99B5, 30%))
+        user-select none
+        cursor pointer
+        &:after
+            mpd(0 0.2em)
+            content '•'
+            color #8F99B5
+        &.active, &:last-child
+            cursor default
+            color lighten(#8F99B5, 30%)
+            &:after
+                display none
+
+
+.tab
+    mpd(20px 0 0, 0, flex)
+    flex-wrap wrap
+    border-bottom 1px solid #384162
+    &-ln
+        mpd(0, 0.8rem 1rem)
+        resetLn(#8F99B5, lighten(#8F99B5, 30%))
+        background #1E253C
+        &.active
+            background #384162
+            color lighten(#8F99B5, 30%)
+    &-content
+        &-item
+            display none
+            height 0px
+            &.active
+                display block
+                height auto
+
+
+.imglist
+    mpd(10px -10px 0, 0, flex)
+    flex-wrap wrap
+    &-add-btn
+        mpd(10px 10px 0, 0, flex)
+        trans()
+        b(1, #1E253C)
+        box-sizing border-box
+        align-items center
+        justify-content center
+        width 110px
+        height @width
+        background #4F5979
+        font-size 30px
+        color #8F99B5
+        cursor pointer
+        user-select none
+        &:hover
+            color lighten(#8F99B5, 50%)
+    &-item
+        mpd(10px 10px 0, 0)
+        position relative
+    &-remove
+        mpd(0, 3px, flex)
+        align-items center
+        justify-content center
+        position absolute
+        top -5px
+        right @top
+        width 20px
+        height @width
+        border-radius 50%
+        background #EE4C67
+        box-shadow 0 0 5px 0 alpha(black, 50%)
+        font-size 11px
+        color white
+        cursor pointer
+        user-select none
+    &-new-img
+        mpd()
+        max-width 100%
+        opacity 0.43
+        box-shadow 0 0 5px 0 black
+    &-saved-img
+        mpd()
+        max-width 100%
+        b(1, #1E253C)
+
+
+.input
+    mpd(0 0 15px, 1rem)
+    b(1, #1E253C)
+    trans()
+    box-sizing border-box
+    width 100%
+    background #4F5979
+    border-radius radius
+    color white
+    font-weight 300
+    line-height 1
+    overflow hidden
+    outline none
+    appearance none
+    &::placeholder
+        color #8F99B5
+    &:focus
+        b(1, #00A8AA)
+    &-error
+        mpd(0.1rem 0 0, 0 0 0 1rem)
+        color #D4324E
+        font-size 0.9em
+    &.error
+        b(1, #D4324E)
+
+
+textarea.input
+    height auto
+    resize none
+    line-height 1.5
+    overflow-y auto
+
+
+.checkbox
+    mpd()
+    trans()
+    b(1, #1E253C)
+    box-sizing border-box
+    width 40px
+    height 26px
+    border-radius 13px
+    background #4F5979
+    appearance none
+    outline none
+    cursor pointer
+    &:before
+        mpd()
+        trans()
+        content ''
+        width 24px
+        height 24px
+        background white
+        border-radius 50%
+    &:checked
+        background #00A8AA
+        &:before
+            margin-left 14px
+    &-label
+        mpd(0 0 15px, 0, flex)
+        align-items center
+        cursor pointer
+        user-select none
+    &-text
+        mpd(0 0 0 0.8em)
+        color #8F99B5
+
+
+.radiolist
+    margin-right -1px
+    .fa-check
+        trans()
+        opacity 0
+        color white
+    &-label
+        mpd(0 1px 0 0)
+        height 100%
+        outline none
+        border none
+        appearance none
+        user-select none
+        cursor pointer
+    &-text
+        mpd(0, 3px 10px, flex)
+        resetLn(#ACB3C6, lighten(#ACB3C6, 80%))
+        trans()
+        align-items center
+        justify-content center
+        height 100%
+        min-height 2.5em
+        position relative
+        box-sizing border-box
+        background #4F5979
+        text-align center
+        // &:hover
+        //     background lighten(#4F5979, 13%)
+    &-input
+        mpd()
+        outline none
+        border none
+        appearance none
+        &:checked + .radiolist-text
+            background lighten(#4F5979, 13%)
+            color lighten(#ACB3C6, 80%)
+            .fa-check
+                opacity 1
+
+
+.label
+    mpd(0 0 5px, 0 0 0 1rem)
+    color #8F99B5
+    + *
+        margin-top 5px
+
+
+.text
+    mpd(0 0 15px, 0)
+    font-size 1em
+
+
+.row-view
+    margin-bottom 15px
+    background #384162
+    position relative
+    border-radius radius
+    overflow hidden
+    &-content
+        margin-top 10px
+        padding-right 15px
+        padding-left 15px
+        padding-bottom 15px
+    &-sort
+        mpd(0, 15px, flex)
+        resetLn(#8F99B5, lighten(#8F99B5, 50%))
+        height 100%
+        align-items center
+        background #4F5979
+        color #8F99B5
+        user-select none
+        &, &:hover
+            cursor ns-resize
+    &-divider
+        mpd()
+        width 100%
+        height 1px
+
+
+.pagination
+    mpd(20px -1px 0 0, 0, flex)
+    align-items stretch
+    &-item
+        mpd(0 1px 0 0)
+        trans()
+        background #384162
+        &:hover, &.active
+            background lighten(#384162, 13%)
+            .pagination-link
+                color white
+        &.disabled
+            display none
+    &-link
+        mpd(0 1px 0 0, 0.5rem 1rem, flex)
+        resetLn(#8F99B5, white)
+        height 100%
+        justify-content center
+        align-items center
+
+
+.detail-view
+    &-row
+        margin-top 1px
+        border-bottom 1px solid transparent
+
+
+.action
+    &-row
+        mpd(0 -1px 0 0, 0, flex)
+        align-items stretch
+        width 100%
+        height 100%
+        .action-btn
+            margin-right 1px
+    &-btn
+        mpd(0, 10px 15px, flex)
+        resetLn(#ACB3C6, lighten(#ACB3C6, 80%))
+        align-items center
+        justify-content center
+        flex-basis 0
+        flex-grow 1
+        width 100%
+        max-width 100%
+        background #4F5979
+        border-bottom 3px solid #34C3F3
+        &.update
+            border-color #FFB25C
+        &.view
+            border-color #00A8AA
+        &.delete
+            border-color #EE4C67
+
+
+.modal
+    background transparent
+    padding 15px
+    &-xl
+        width 100%
+        max-width 1200px
+
+
+.ace-editor
+    mpd(5px 0 0)
+    position relative
+    min-height 400px
+    overflow auto
+
+
+*[data-ace]
+    position absolute
+    top 0px
+    left 0px
+    right 0px
+    bottom 0px
+
+
+.tox
+    margin-top 5px !important
+
+
+.loader
+    mpd()
+    position absolute
+    top 0px
+    left 0px
+    right 0px
+    bottom 0px
+    background alpha(#1D243B, 63%)
+    &-img
+        position absolute
+        top 50%
+        left 50%
+        margin -5px 0 0 -28px
+
+
+.green
+    color #00A8AA
+
+
+.text
+    &-right
+        text-align right
+    &-center
+        text-align center
+
+
+.pt-1px
+    padding-top 1px

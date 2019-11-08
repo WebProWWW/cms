@@ -1,12 +1,12 @@
 /* CONFIG
- * * * * * * * * * * * * * * * * * * * * *  * * * * * * * * * * * * * * * * * * * * * * */
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 const conf = {
   opt: {
     header: '/*\n * @author Timur Valiyev\n * @link https://webprowww.github.io\n */\n\n',
-    stylus: { compress: false },
-    prefixer: { browsers:['last 2 versions'], cascade:true },
-    coffee: { bare: true },
+    stylus: { compress: true },
+    prefixer: { Browserslist:['last 2 versions'], cascade:false },
+    coffee: { bare: false, transpile: {presets: ["@babel/preset-env"]} },
     livereload: { basePath: './public_html/' },
     include: { hardFail:false }
   },
@@ -15,35 +15,40 @@ const conf = {
     stylusWatch: './src/stylus/**/*.styl',
     stylusSrc: './src/stylus/*.styl',
     stylusDest: './public_html/css',
+    vendorCss: './src/include.css',
 
     coffeeWatch: './src/coffee/**/*.coffee',
     coffeeSrc: './src/coffee/*.coffee',
     coffeeDest: './public_html/js',
+    vendorJs: './src/include.js',
 
     htmlWatch: './src/html/**/*.html',
     htmlSrc: './src/html/*.html',
     htmlDest: './public_html'
   },
 
-  cms: {
-    backend: {
-      stylusWatch: './**/*.styl',
-      stylusSrc: './src_html/backend/stylus/*.styl',
-      stylusDest: './public_html/admin-panel/css',
+  backend: {
+    stylusWatch: './src/backend/stylus/**/*.styl',
+    stylusSrc: './src/backend/stylus/*.styl',
+    stylusDest: './public_html/admin-panel/css',
+    vendorCss: './src/backend/include.css',
 
-      coffeeWatch: './**/*.coffee',
-      coffeeSrc: './src_html/backend/coffee/*.coffee',
-      coffeeDest: './public_html/admin-panel/js',
-    },
-    fronted: {
-      stylusWatch: './**/*.styl',
-      stylusSrc: './src_html/fronted/stylus/*.styl',
-      stylusDest: './public_html/css',
+    coffeeWatch: './src/backend/coffee/**/*.coffee',
+    coffeeSrc: './src/backend/coffee/*.coffee',
+    coffeeDest: './public_html/admin-panel/js',
+    vendorJs: './src/backend/include.js',
+  },
+  
+  frontend: {
+    stylusWatch: './src/frontend/stylus/**/*.styl',
+    stylusSrc: './src/frontend/stylus/*.styl',
+    stylusDest: './public_html/css',
+    vendorCss: './src/frontend/include.css',
 
-      coffeeWatch: './**/*.coffee',
-      coffeeSrc: './src_html/fronted/coffee/*.coffee',
-      coffeeDest: './public_html/js',
-    }
+    coffeeWatch: './src/frontend/coffee/**/*.coffee',
+    coffeeSrc: './src/frontend/coffee/*.coffee',
+    coffeeDest: './public_html/js',
+    vendorJs: './src/frontend/include.js'
   },
 
   watcher: [
@@ -60,11 +65,13 @@ const conf = {
 const { src, dest, watch } = require('gulp');
 const watcher = watch(conf.watcher);
 
+const fs = require('fs');
 const livereload = require('gulp-livereload');
 const stylus = require('gulp-stylus');
 const include = require('gulp-include');
 const prefixer = require('gulp-autoprefixer');
 const coffee = require('gulp-coffee');
+const uglify = require('gulp-uglify');
 const header = require('gulp-header');
 
 /* FUNCTIONS
@@ -75,34 +82,39 @@ function error(err, done) {
   return done();
 }
 
-function compileCoffee(a={done, src, dest}) {
-  return src(a.src)
-    .on('end', function() { return a.done(); })
-    .on('error', function (err) { return error(err, a.done); })
-    .pipe(include(conf.opt.include).on('error', function(err) { return error(err, a.done); }))
-    .pipe(coffee(conf.opt.coffee).on('error', function(err) { return error(err, a.done); }))
+function compileCoffee(config, done) {
+  return src(config.coffeeSrc)
+    .on('end', function() { return done(); })
+    .on('error', function (err) { return error(err, done); })
+    .pipe(include(conf.opt.include).on('error', function(err) { return error(err, done); }))
+    .pipe(coffee(conf.opt.coffee).on('error', function(err) { return error(err, done); }))
+    .pipe(uglify().on('error', function(err) { return error(err, done); }))
     .pipe(header(conf.opt.header))
-    .pipe(dest(a.dest))
+    .pipe(header(fs.readFileSync(config.vendorJs)))
+    .pipe(include(conf.opt.include).on('error', function(err) { return error(err, done); }))
+    .pipe(dest(config.coffeeDest))
     .pipe(livereload());
 }
 
-function compileStylus(a={done, src, dest}) {
-  return src(a.src)
-    .on('end', function() { return a.done(); })
-    .on('error', function (err) { return error(err, a.done); })
-    .pipe(stylus(conf.opt.stylus).on('error', function(err) { return error(err, a.done); }))
-    .pipe(prefixer(conf.opt.prefixer).on('error', function(err) { return error(err, a.done); }))
+function compileStylus(config, done) {
+  return src(config.stylusSrc)
+    .on('end', function() { return done(); })
+    .on('error', function (err) { return error(err, done); })
+    .pipe(stylus(conf.opt.stylus).on('error', function(err) { return error(err, done); }))
+    .pipe(prefixer(conf.opt.prefixer).on('error', function(err) { return error(err, done); }))
     .pipe(header(conf.opt.header))
-    .pipe(dest(a.dest))
+    .pipe(header(fs.readFileSync(config.vendorCss)))
+    .pipe(include(conf.opt.include).on('error', function(err) { return error(err, done); }))
+    .pipe(dest(config.stylusDest))
     .pipe(livereload());
 }
 
-function includeHtml(a={done, src, dest}) {
-  return src(a.src)
-    .on('end', function() { return a.done(); })
-    .on('error', function (err) { return error(err, a.done); })
-    .pipe(include(conf.opt.include).on('error', function(err) { return error(err, a.done); }))
-    .pipe(dest(a.dest))
+function includeHtml(config, done) {
+  return src(config.htmlSrc)
+    .on('end', function() { return done(); })
+    .on('error', function (err) { return error(err, done); })
+    .pipe(include(conf.opt.include).on('error', function(err) { return error(err, done); }))
+    .pipe(dest(config.htmlDest))
     .pipe(livereload());
 }
 
@@ -111,15 +123,15 @@ function reloadPage(path) { livereload.reload(path); }
 /* TASKS
  * * * * * * * * * * * * * * * * * * * * *  * * * * * * * * * * * * * * * * * * * * * * */
 
-function defaultStylus(done) { compileStylus({ done:done, src:conf.default.stylusSrc, dest:conf.default.stylusDest }); }
-function defaultCoffee(done) { compileCoffee({ done:done, src:conf.default.coffeeSrc, dest:conf.default.coffeeDest }); }
-function defaultHtml(done) { includeHtml({ done:done, src:conf.default.htmlSrc, dest:conf.default.htmlDest }); }
+function defaultStylus(done) { compileStylus(conf.default, done); }
+function defaultCoffee(done) { compileCoffee(conf.default, done); }
+function defaultHtml(done) { includeHtml(conf.default, done); }
 
-function frontedStylus(done) { compileStylus({ done:done, src:conf.cms.fronted.stylusSrc, dest:conf.cms.fronted.stylusDest }); }
-function frontedCoffee(done) { compileCoffee({ done:done, src:conf.cms.fronted.coffeeSrc, dest:conf.cms.fronted.coffeeDest }); }
+function frontendStylus(done) { compileStylus(conf.frontend, done); }
+function frontendCoffee(done) { compileCoffee(conf.frontend, done); }
 
-function backendStylus(done) { compileStylus({ done:done, src:conf.cms.backend.stylusSrc, dest:conf.cms.backend.stylusDest }); }
-function backendCoffee(done) { compileCoffee({ done:done, src:conf.cms.backend.coffeeSrc, dest:conf.cms.backend.coffeeDest }); }
+function backendStylus(done) { compileStylus(conf.backend, done); }
+function backendCoffee(done) { compileCoffee(conf.backend, done); }
 
 exports.default = function() {
   livereload.listen(conf.opt.livereload);
@@ -130,10 +142,10 @@ exports.default = function() {
 
 exports.cms = function() {
   livereload.listen(conf.opt.livereload);
-  watch(conf.cms.fronted.stylusWatch, frontedStylus);
-  watch(conf.cms.fronted.coffeeWatch, frontedCoffee);
-  watch(conf.cms.backend.stylusWatch, backendStylus);
-  watch(conf.cms.backend.coffeeWatch, backendCoffee);
+  watch(conf.frontend.stylusWatch, frontendStylus);
+  watch(conf.frontend.coffeeWatch, frontendCoffee);
+  watch(conf.backend.stylusWatch, backendStylus);
+  watch(conf.backend.coffeeWatch, backendCoffee);
 };
 
 watcher.on('add', reloadPage).on('change', reloadPage).on('unlink', reloadPage);

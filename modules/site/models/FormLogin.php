@@ -7,7 +7,7 @@
 
 namespace modules\site\models;
 
-use components\user\Identity;
+use components\user\Model as User;
 
 use Yii;
 use yii\base\Model;
@@ -16,7 +16,7 @@ use yii\base\Model;
  * Class FormModel
  * @package modules\site\model
  *
- * @property Identity $user
+ * @property User $user
  */
 class FormLogin extends Model
 {
@@ -25,6 +25,7 @@ class FormLogin extends Model
     public $password;
     public $remember = true;
     private $_user;
+
 
     public function rules()
     {
@@ -36,6 +37,7 @@ class FormLogin extends Model
         ];
     }
 
+
     public function attributeLabels()
     {
         return [
@@ -44,6 +46,7 @@ class FormLogin extends Model
             'remember' => 'Запомнить меня',
         ];
     }
+
 
     public function validatePassword()
     {
@@ -66,12 +69,12 @@ class FormLogin extends Model
     }
 
     /**
-     * @return Identity|null
+     * @return User|null
      */
     protected function getUser()
     {
         if ($this->_user === null) {
-            $this->_user = Identity::findByEmail($this->email);
+            $this->_user = User::findByEmail($this->email);
         }
         return $this->_user;
     }

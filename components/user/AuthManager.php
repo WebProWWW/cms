@@ -61,7 +61,7 @@ class AuthManager extends PhpManager
      */
     public function getUserIdsByRole($roleName)
     {
-        return Identity::find()
+        return Model::find()
             ->where(['role'=>$roleName,'status'=>Access::STATUS_ACTIVE])
             ->select('id')
             ->column();
@@ -117,7 +117,7 @@ class AuthManager extends PhpManager
 
     /**
      * @param int $id
-     * @return Identity|\yii\web\IdentityInterface|null
+     * @return Model|\yii\web\IdentityInterface|null
      */
     private function getUser($id)
     {
@@ -125,11 +125,11 @@ class AuthManager extends PhpManager
         if ($user && !$user->isGuest && $user->id === $id) {
             return $user->identity;
         }
-        return Identity::findOne(['id'=>$id, 'status'=>Access::STATUS_ACTIVE]);
+        return Model::findOne(['id'=>$id, 'status'=>Access::STATUS_ACTIVE]);
     }
 
     /**
-     * @param Identity $user
+     * @param Model $user
      * @param string $roleName
      */
     private function setRole($user, $roleName)

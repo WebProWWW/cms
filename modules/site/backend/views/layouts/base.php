@@ -5,17 +5,17 @@
  * 2019-02-06 20:32
  */
 
-use modules\site\backend\assets\Backend;
+use modules\site\backend\Asset;
 
 use yii\web\View;
 use yii\helpers\Html;
 
-/* @var \yii\web\View $this */
+/* @var yii\web\View $this */
 /* @var string $content */
 
 $host = Yii::$app->request->hostInfo;
 
-Backend::register($this);
+Asset::register($this);
 
 $this->registerJsVar('app', [
     'csrf' => [
@@ -34,7 +34,7 @@ $this->registerJsVar('app', [
     <meta name="format-detection" content="date=no">
     <meta name="format-detection" content="address=no">
     <meta name="format-detection" content="email=no">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
     <?= Html::csrfMetaTags() ?>
     <?php $this->head(); ?>
 </head>

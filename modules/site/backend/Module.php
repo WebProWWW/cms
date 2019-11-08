@@ -22,7 +22,13 @@ class Module extends \yii\base\Module
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => [ 'login' ],
+                        'actions' => [
+                            'login',
+                            'error',
+                            'restore',
+                            'restore-success',
+                            'reset-password',
+                        ],
                         'allow' => true,
                     ],
                     [
@@ -34,3 +40,5 @@ class Module extends \yii\base\Module
         ];
     }
 }
+
+/* Class Module */

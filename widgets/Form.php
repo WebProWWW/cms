@@ -7,15 +7,11 @@
 
 namespace widgets;
 
-use Yii;
+use yii\base\InvalidConfigException;
 use yii\base\Widget;
-use yii\base\Exception;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\widgets\ActiveForm;
-use yii\helpers\Json;
 
 /**
  * Class Form
@@ -31,55 +27,18 @@ class Form extends Widget
     public $method = 'post';
     public $opt = [];
 
-    public $ajax = false;
-    public $ajaxOnSuccess;
-    public $ajaxOnError;
-    public $ajaxOnErrorValidate;
-
-    const AJAX_POPUP_SUCCESS = 'popupSuccess';
-    const AJAX_POPUP_ERROR = 'popupError';
-    const AJAX_ADD_SUCCESS = 'addSuccess';
-    const AJAX_ADD_ERROR = 'addError';
-    const AJAX_REDIRECT = 'redirect';
-    const AJAX_REFRESH = 'refresh';
-    const AJAX_ADD_ERRORS = 'addErrors';
-
+    /**
+     * @inheritDoc
+     */
     public function init()
     {
         parent::init();
         ob_start();
-        if ($this->ajax) {
-            if ($this->ajaxOnSuccess === null) $this->ajaxOnSuccess = self::AJAX_POPUP_SUCCESS;
-            if ($this->ajaxOnError === null) $this->ajaxOnError = self::AJAX_POPUP_ERROR;
-            if ($this->ajaxOnErrorValidate === null) $this->ajaxOnErrorValidate = self::AJAX_ADD_ERRORS;
-            echo Html::beginForm(null, $this->method, ArrayHelper::merge([
-                'data-ajax' => Json::encode([
-                    'action' => Url::to($this->action),
-                    'onSuccess' => $this->ajaxOnSuccess,
-                    'onError' => $this->ajaxOnError,
-                    'onErrorValidate' => $this->ajaxOnErrorValidate,
-                ]),
-            ], $this->opt));
-        } else {
-            echo Html::beginForm($this->action, $this->method, $this->opt);
-        }
-    }
-
-    public static function success()
-    {
-        return ['formValidateStatus' => 1];
-    }
-
-    public static function validate($model)
-    {
-        return [
-            'formValidateStatus' => 0,
-            'errors' => ActiveForm::validate($model),
-        ];
+        echo Html::beginForm($this->action, $this->method, $this->opt);
     }
 
     /**
-     * @return false|string
+     * @inheritDoc
      */
     public function run()
     {
@@ -106,15 +65,10 @@ class Form extends Widget
      */
     public function error($attr, $opt=[])
     {
-        try {
-            return Html::tag('div', $this->model->getFirstError($attr), ArrayHelper::merge([
-                'class' => 'input-error',
-                'for' => $this->getInputId($attr),
-            ], $opt));
-        } catch (Exception $exception) {
-            return '';
-
-        }
+        return Html::tag('div', $this->model->getFirstError($attr), ArrayHelper::merge([
+            'class' => 'input-error',
+            'for' => $this->getInputId($attr),
+        ], $opt));
     }
 
     /**
@@ -151,6 +105,11 @@ class Form extends Widget
         return $this->input('password', $attr, $opt);
     }
 
+    /**
+     * @param $attr
+     * @param array $opt
+     * @return string
+     */
     public function textarea($attr, $opt=[])
     {
         return Html::activeTextarea($this->model, $attr, ArrayHelper::merge([
@@ -296,17 +255,20 @@ class Form extends Widget
     /**
      * @param string $attr
      * @return string
-     * @throws \yii\base\InvalidConfigException
      */
     public function getInputId($attr)
     {
-        return strtolower($this->model->formName().'-'.$attr);
+        $id = '';
+        try {
+            $id = strtolower($this->model->formName() . '-' . $attr);
+        } catch (InvalidConfigException $e) {}
+        return $id;
     }
 
     /**
      * @param string $attr
      * @return string
-     * @throws \yii\base\InvalidConfigException
+     * @throws InvalidConfigException
      */
     public function getInputName($attr)
     {

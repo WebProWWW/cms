@@ -7,7 +7,7 @@
 
 use widgets\NavTiled;
 
-/* @var \yii\web\View $this */
+/* @var yii\web\View $this */
 
 $this->title = 'Меню'
 

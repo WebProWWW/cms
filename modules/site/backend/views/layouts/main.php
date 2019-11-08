@@ -12,7 +12,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 
-/* @var \yii\web\View $this */
+/* @var yii\web\View $this */
 /* @var string $content */
 
 ?>
@@ -31,10 +31,8 @@ use yii\helpers\ArrayHelper;
             </div><!-- /.col -->
             <div class="col-auto ml-auto">
                 <div class="dropdown">
-                    <a class="header-ln js-prevent">
-                    <span class="mr-1">
-                        <?= Yii::$app->user->identity->username ?>
-                    </span>
+                    <a class="header-ln js-prevent" href>
+                        <span class="mr-2"><?= Yii::$app->user->identity->username ?></span>
                         <i class="fas fa-user-circle"></i>
                     </a>
                     <div class="dropdown-content" id="dropdown-user">

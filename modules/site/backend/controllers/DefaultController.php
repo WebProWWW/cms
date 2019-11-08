@@ -4,11 +4,11 @@ namespace modules\site\backend\controllers;
 
 use components\user\Access;
 use modules\site\models\FormLogin;
-use widgets\Form;
+use modules\site\models\FormRestore;
+use modules\site\models\FormPasswordReset;
 
 use Yii;
 use yii\web\Controller;
-use yii\web\Response;
 
 /**
  * Class DefaultController
@@ -22,6 +22,7 @@ class DefaultController extends Controller
         return $this->render('index');
     }
 
+
     public function actionLogin()
     {
         if (Yii::$app->user->identity->role === Access::ROLE_ADMIN) {
@@ -29,16 +30,13 @@ class DefaultController extends Controller
         }
         $this->layout = 'base';
         $model = new FormLogin();
-        if (Yii::$app->request->isAjax) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            if ($model->load(Yii::$app->request->post()) && $model->login()) {
-                return Form::success();
-            }
-            return Form::validate($model);
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            return $this->goHome();
         }
         $model->password = '';
-        return $this->render('login', ['model'=>$model]);
+        return $this->render('login', ['model' => $model]);
     }
+
 
     public function actionLogout()
     {
@@ -46,4 +44,28 @@ class DefaultController extends Controller
         return $this->goHome();
     }
 
+
+    public function actionRestore()
+    {
+        $this->layout = 'base';
+        $model = new FormRestore([ 'role' => Access::ROLE_ADMIN ]);
+        if ($model->load(Yii::$app->request->post()) and $model->send()) {
+            return $this->render('restore-success', ['model' => $model]);
+        }
+        return $this->render('restore', ['model' => $model]);
+    }
+
+
+    public function actionResetPassword($token)
+    {
+        $this->layout = 'base';
+        $model = new FormPasswordReset($token);
+        if ($model->load(Yii::$app->request->post()) and $model->resetPassword()) {
+            return $this->goHome();
+        }
+        return $this->render('reset-password', ['model' => $model]);
+    }
+
 }
+
+/* Class DefaultController */

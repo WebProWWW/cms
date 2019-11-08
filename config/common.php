@@ -35,24 +35,32 @@ return [
             'traceLevel'  => 0, // YII_DEBUG ? 3 : 0
             'targets'     => [
                 [
-                    'class'    => \yii\log\FileTarget::class,
+                    'class'    => yii\log\FileTarget::class,
                     'levels'   => ['error', 'warning'],
                 ],
             ],
         ],
         'cache' => [
-            'class' => \yii\caching\FileCache::class
+            'class' => yii\caching\FileCache::class
         ],
         'user' => [
-            'identityClass'    => \components\user\Identity::class,
+            'identityClass'    => components\user\Model::class,
             'enableAutoLogin'  => true,
             'loginUrl'         => ['/site/default/login'],
             'identityCookie'   => ['name'=>'_identity-cms','httpOnly'=>true],
         ],
         'authManager' => [
-            'class' => \components\user\AuthManager::class,
+            'class' => components\user\AuthManager::class,
         ],
         'db'      => require __DIR__.'/db.php',
         'mailer'  => require __DIR__.'/mailer.php',
+    ],
+    'params' => [
+        'mailer' => [
+            'from' => 'v.timur8484@yandex.ru',
+        ],
+        'user' => [
+            'passwordResetTokenExpire' => 3600,
+        ],
     ],
 ];
